@@ -1,0 +1,8 @@
+*.o
+*.a
+*.dSYM
+ni_*
+.DS_Store
+minishell
+minishell_debug
+.vscode
