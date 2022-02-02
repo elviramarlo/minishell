@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
+#    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/02 17:29:33 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/02 19:37:15 by gaguado-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -O3#-g3 -fsanitize=address
 NAME = minishell
 DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
-SOURCE_DIR= srcs/
+SOURCE_DIR= srcs
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
 
@@ -29,11 +29,11 @@ LIBFT = $(LIBFTPATH)$(LIBFTNAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 		@echo $(PURPLE)Compiling ... $(RESET)
-		$(CC) ${CFLAGS} ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -o ${NAME}
+		$(CC) ${CFLAGS} ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
 
 $(DEBUG_NAME): $(OBJS) $(LIBFT)
 		@echo $(BLUE)Compiling debug... $(RESET)
-		$(CC) ${CFLAGS} -I $(INCLUDES) -g ${SRCS} ${LIBFT} -o ${DEBUG_NAME}
+		$(CC) ${CFLAGS} -I $(INCLUDES) -g ${SRCS} ${LIBFT} -lreadline -o ${DEBUG_NAME}
 
 $(LIBFT):		
 		@echo $(PURPLE)Libft $(RESET)
