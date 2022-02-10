@@ -6,7 +6,7 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/10 18:15:37 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/10 18:45:27 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,13 @@ NAME = minishell
 DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
+SOURCE_BUILT = $(SOURCE_DIR)/builtins
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
 
-SRCS = $(SOURCE_DIR)/minishell.c
+SRCS = $(SOURCE_DIR)/minishell.c \
+		$(SOURCE_BUILT)/pwd.c
+
 OBJS = $(SRCS:.c=.o)
 
 RM = rm -f
