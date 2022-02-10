@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 13:12:23 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/10/16 11:19:59 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/05/11 01:19:41 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_list *str;
+	t_list	*str;
 
 	while (lst)
 	{

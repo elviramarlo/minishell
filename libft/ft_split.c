@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 11:17:19 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/12/24 14:31:21 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/05/13 21:49:57 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	ft_num_str(char const *s, char c)
 {
-	int			i;
-	int			num_str;
+	int	i;
+	int	num_str;
 
 	i = 0;
 	num_str = 0;
@@ -28,7 +28,7 @@ static int	ft_num_str(char const *s, char c)
 	return (num_str);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char		**ptr;
 	int			num_str;
@@ -39,7 +39,8 @@ char		**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	num_str = ft_num_str(s, c);
-	if (!(ptr = (char **)malloc(sizeof(char *) * num_str + 1)))
+	ptr = (char **)malloc(sizeof(char *) * num_str + 1);
+	if (!ptr)
 		return (NULL);
 	end = 0;
 	cont = -1;

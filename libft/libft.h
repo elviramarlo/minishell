@@ -6,19 +6,20 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:01:36 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/10/15 12:51:29 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/10/29 17:58:42 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	ifndef LIBFT_H
-# 	define LIBFT_H
+#ifndef LIBFT_H
+# define LIBFT_H
 
-# 	include <stdio.h>
-# 	include <unistd.h>
-# 	include <string.h>
-# 	include <stdlib.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
@@ -34,7 +35,8 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t			ft_strlen(const char *str);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
-char			*ft_strchr(char *str, int c);
+int				ft_strcmp(const char *s1, const char *s2);
+char			*ft_strchr(char *str, char c);
 char			*ft_strrchr(char *str, int c);
 char			*ft_strnstr(char *big, char *lit, int len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -67,5 +69,14 @@ void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *ls, void *(*f)(void *), void (*dl)(void *));
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+int				get_next_line(int fd, char **line);
+int				is_line(int fd, char **line, char **stat, int ret);
+void			set_static(int fd, char **stat, char *buffer);
+void			ft_null(char *str);
 
 #	endif

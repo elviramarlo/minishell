@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:58:00 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/10/06 12:42:49 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/06/01 23:18:54 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,38 @@ static int	ft_size(unsigned int n)
 	i = 0;
 	while (n >= 10)
 	{
-		n = n / 10;
+		n /= 10;
 		i++;
 	}
 	i++;
 	return (i);
 }
 
-char		*ft_itoa(int n)
+static int	isnegative(int n)
+{
+	if (n < 0)
+		return (2);
+	return (1);
+}
+
+static int	itoa_nb(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
+
+char	*ft_itoa(int n)
 {
 	char			*dest;
 	unsigned int	len;
 	unsigned int	nb;
 	unsigned int	i;
 
-	nb = (n < 0 ? -n : n);
+	nb = itoa_nb(n);
 	len = ft_size(nb);
-	i = 0;
-	if (!(dest = (char *)malloc(sizeof(char) * len + (n < 0 ? 2 : 1))))
+	dest = (char *)malloc(sizeof(char) * len + isnegative(n));
+	if (!(dest))
 		return (NULL);
 	if (n < 0)
 	{
@@ -47,7 +61,7 @@ char		*ft_itoa(int n)
 	while (nb >= 10)
 	{
 		dest[i] = nb % 10 + '0';
-		nb = nb / 10;
+		nb /= 10;
 		i--;
 	}
 	dest[i] = nb % 10 + '0';

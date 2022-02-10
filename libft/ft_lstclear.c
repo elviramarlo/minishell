@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 12:50:57 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/10/08 13:16:00 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/05/11 00:52:52 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list *str;
+	t_list	*str;
 
 	while (*lst)
 	{

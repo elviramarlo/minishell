@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 20:57:11 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/12/24 14:35:37 by elvmarti         ###   ########.fr       */
+/*   Updated: 2020/10/06 13:38:40 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	while (i < n)
 	{
 		if (pt1[i] != pt2[i])
+		{
 			return (pt1[i] - pt2[i]);
+		}
 		i++;
 	}
 	return (0);

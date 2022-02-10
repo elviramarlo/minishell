@@ -6,13 +6,13 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 20:50:06 by elvmarti          #+#    #+#             */
-/*   Updated: 2020/12/24 14:35:37 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/05/11 00:49:28 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigit(int a)
+int	ft_isdigit(int a)
 {
 	if (a > 47 && a < 58)
 		return (1);

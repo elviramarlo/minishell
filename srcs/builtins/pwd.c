@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 20:49:39 by elvmarti          #+#    #+#             */
-/*   Updated: 2021/05/11 00:49:23 by elvmarti         ###   ########.fr       */
+/*   Created: 2022/02/10 18:07:20 by elvmarti          #+#    #+#             */
+/*   Updated: 2022/02/10 18:08:35 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-int	ft_isascii(int a)
+void	get_cwd(void)
 {
-	if (a >= 0 && a <= 127)
-		return (1);
-	return (0);
+	char	cwd[500];
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		printf("Error\n");
+	else
+		printf("%s\n", cwd);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
+#    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/02 19:37:15 by gaguado-         ###   ########.fr        #
+#    Updated: 2022/02/10 18:15:37 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,11 +28,11 @@ RM = rm -f
 LIBFT = $(LIBFTPATH)$(LIBFTNAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-		@echo $(PURPLE)Compiling ... $(RESET)
+		@echo $(PURPLE)- Compiling - $(RESET)
 		$(CC) ${CFLAGS} ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
 
 $(DEBUG_NAME): $(OBJS) $(LIBFT)
-		@echo $(BLUE)Compiling debug... $(RESET)
+		@echo $(BLUE)- Compiling debug - $(RESET)
 		$(CC) ${CFLAGS} -I $(INCLUDES) -g ${SRCS} ${LIBFT} -lreadline -o ${DEBUG_NAME}
 
 $(LIBFT):		
@@ -44,7 +44,7 @@ all: $(NAME)
 debug: $(DEBUG_NAME)
 
 clean:
-		@echo $(PURPLE)Cleaning ... $(RED)
+		@echo $(PURPLE) - Cleaning - $(RED)
 		$(RM) $(OBJS) $(LIBFTPATH)*.o
 
 fclean: clean
