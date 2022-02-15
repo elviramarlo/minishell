@@ -6,12 +6,12 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/10 22:15:54 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/15 18:56:59 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -O3#-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-O3-g3 -fsanitize=address
 
 NAME = minishell
 DEBUG_NAME = minishell_debug

@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/11 16:44:20 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:57:54 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ typedef struct s_shell
 {
 	char	*prompt;
 	int		flag;
+	char	**cmd;
 }				t_shell;
 
 // Builtins
 void	ft_pwd(void);
-void	ft_echo(t_shell *shell, char *prompt);
+void	ft_echo(t_shell *shell);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"

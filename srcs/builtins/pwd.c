@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 18:07:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/10 22:16:17 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:49:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_pwd(void)
 {
-	char	cwd[500];
+	char	cwd[4096];
 
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		printf("Error\n");
