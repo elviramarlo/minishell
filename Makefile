@@ -6,7 +6,7 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/15 18:56:59 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/17 17:06:37 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
 
 SRCS = $(SOURCE_DIR)/minishell.c \
+		$(SOURCE_DIR)/parse.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c
 

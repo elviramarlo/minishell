@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/15 16:57:54 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/17 19:31:31 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
-
 # include "../libft/libft.h"
 
 typedef struct s_shell
@@ -27,9 +26,19 @@ typedef struct s_shell
 	char	**cmd;
 }				t_shell;
 
+typedef struct s_aux_parse
+{
+	int		i;
+	int		x;
+	int		num_quotes;
+}				t_aux_parse;
+
 // Builtins
 void	ft_pwd(void);
 void	ft_echo(t_shell *shell);
+
+//Parseo
+char	**parse_prompt(t_shell *shell);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
