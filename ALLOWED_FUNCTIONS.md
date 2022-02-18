@@ -45,7 +45,6 @@
 | ```void (*signal(int sig, void (*func)(int)))(int)```													| Simplified signal processing			| ```man```				|
 | ```int sigaction(int sig, const struct sigaction *restrict act, struct sigaction *restrict oact)```	| Signal processing						| ```man```				|
 | ```int kill(pid_t pid, int sig)```																	| Send signal to a process				| ```man```				|
-| ```int kill(pid_t pid, int sig)```																	| Send signal to a process				| ```man```				|
 | ```void perror(const char *s)```																		| Process error messages				| ```man```				|
 | ```char *strerror(int errnum)```																		| System error messages					| ```man```				|
 
