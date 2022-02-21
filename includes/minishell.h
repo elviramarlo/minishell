@@ -6,23 +6,27 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/17 19:31:31 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:50:35 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
-# include "../libft/libft.h"
+
+# define DQT 	'"'
+# define SQT	'\''
+# define SPC	' '
 
 typedef struct s_shell
 {
 	char	*prompt;
-	int		flag;
+	int		isvoid;
 	char	**cmd;
 }				t_shell;
 
@@ -30,7 +34,10 @@ typedef struct s_aux_parse
 {
 	int		i;
 	int		x;
-	int		num_quotes;
+	int		check;
+	int		start;
+	int		len;
+	int		num_str;
 }				t_aux_parse;
 
 // Builtins
@@ -38,7 +45,9 @@ void	ft_pwd(void);
 void	ft_echo(t_shell *shell);
 
 //Parseo
-char	**parse_prompt(t_shell *shell);
+char	**parse_prompt(t_shell *shell, char *prompt);
+int		even_quotes(t_shell *shell);
+int		num_str(char *prompt, t_aux_parse *parse);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
