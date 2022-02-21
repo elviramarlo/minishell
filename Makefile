@@ -3,25 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
+#    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/10 22:15:54 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/21 19:31:40 by gaguado-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -O3#-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address
 
 NAME = minishell
 DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
 SOURCE_BUILT = $(SOURCE_DIR)/builtins
+SOURCE_UTILS = $(SOURCE_DIR)/utils
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
 
-SRCS = $(SOURCE_DIR)/minishell.c \
+SRCS =	$(SOURCE_DIR)/minishell.c \
+		$(SOURCE_DIR)/signal_handlers.c \
+		$(SOURCE_UTILS)/array_utils.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c
 
@@ -34,7 +37,7 @@ LIBFT = $(LIBFTPATH)$(LIBFTNAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 		@echo $(PURPLE)- Compiling - $(RESET)
-		$(CC) ${CFLAGS} ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
+		$(CC) ${CFLAGS} -O3 ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
 
 $(DEBUG_NAME): $(OBJS) $(LIBFT)
 		@echo $(BLUE)- Compiling debug - $(RESET)
