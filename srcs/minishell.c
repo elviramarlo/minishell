@@ -6,33 +6,38 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/11 16:47:19 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:33:46 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//Gestionar errores
-
-static void	check_builtin(t_shell *shell)
+static void	check_cmd(t_shell *shell)
 {
 	int	i;
 
 	i = 0;
-	while (shell->prompt[i] == ' ')
-		i++;
-	if (!ft_strncmp(&shell->prompt[i], "pwd", 3))
-		ft_pwd();
-	else if (!ft_strncmp(&shell->prompt[i], "echo", 4))
-		ft_echo(shell, &shell->prompt[i]);
+	if (!shell->isvoid)
+	{
+		if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0)
+			ft_pwd();
+		else if (!ft_strncmp(shell->cmd[i], "echo", 4))
+			ft_echo(shell);
+		else
+		{
+			while (shell->cmd[i])
+			{
+				printf("%s\n", shell->cmd[i]);
+				i++;
+			}
+		}
+	}
 }
 
 int	main(int argc, char **argv, char **env_var)
 {
-	int		i;
 	t_shell	shell;
 
-	i = 0;
 	(void)argc;
 	(void)argv;
 	(void)env_var;
@@ -40,7 +45,8 @@ int	main(int argc, char **argv, char **env_var)
 	while (1)
 	{
 		shell.prompt = readline(CYAN"minishell> "RESET);
-		check_builtin(&shell);
+		shell.cmd = parse_prompt(&shell, shell.prompt);
+		check_cmd(&shell);
 		free(shell.prompt);
 	}
 }

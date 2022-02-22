@@ -6,22 +6,25 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/10 22:15:54 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/20 17:50:21 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -O3#-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-O3-g3 -fsanitize=address
 
 NAME = minishell
 DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
 SOURCE_BUILT = $(SOURCE_DIR)/builtins
+SOURCE_PARS = $(SOURCE_DIR)/parser
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
 
 SRCS = $(SOURCE_DIR)/minishell.c \
+		$(SOURCE_PARS)/parse.c \
+		$(SOURCE_PARS)/aux.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c
 
