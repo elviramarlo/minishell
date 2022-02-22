@@ -11,18 +11,22 @@
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-O3-g3 -fsanitize=address
 
 NAME = minishell
 DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
 SOURCE_BUILT = $(SOURCE_DIR)/builtins
+SOURCE_PARS = $(SOURCE_DIR)/parser
 SOURCE_UTILS = $(SOURCE_DIR)/utils
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
 
-SRCS =	$(SOURCE_DIR)/minishell.c \
+
+SRCS = $(SOURCE_DIR)/minishell.c \
+		$(SOURCE_PARS)/parse.c \
+		$(SOURCE_PARS)/aux.c \
 		$(SOURCE_DIR)/signal_handlers.c \
 		$(SOURCE_UTILS)/array_utils.c \
 		$(SOURCE_BUILT)/pwd.c \

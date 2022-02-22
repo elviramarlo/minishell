@@ -6,50 +6,48 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 22:02:19 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/11 16:45:34 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/21 21:03:50 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	flag(t_shell *shell, char *prompt)
+static int	check_flag(t_shell *shell, int *y)
 {
-	int	i;
+	int	x;
+	int	flag;
 
-	i = 4;
-	shell->flag = 0;
-	while (prompt[i] == ' ' || (prompt[i] == '-' && prompt[i + 1] == 'n'
-			&& prompt[i + 2] == ' '))
+	flag = 0;
+	while (shell->cmd[*y] != 0 && !ft_strncmp(shell->cmd[*y], "-n", 2))
 	{
-		if (ft_strnstr(prompt, "-n ", 3 + i))
+		x = 1;
+		while (shell->cmd[*y][x] == 'n')
+			x++;
+		if (shell->cmd[*y][x] == '\0')
 		{
-			shell->flag = 1;
-			i += 2;
+			flag = 1;
+			*y += 1;
 		}
-		i++;
+		else
+			break ;
 	}
-	return (i);
+	return (flag);
 }
 
-void	ft_echo(t_shell *shell, char *prompt)
+void	ft_echo(t_shell *shell)
 {
-	int		i;
-	char	**echo;
+	int	y;
+	int	flag;
 
-	i = flag(shell, prompt);
-	prompt = ft_substr(prompt, i, ft_strlen(prompt));
-	if (ft_strchr(prompt, '"'))
+	y = 1;
+	flag = check_flag(shell, &y);
+	while (shell->cmd[y])
 	{
-		i = 0;
-		echo = ft_split(prompt, '"');
-		while (echo[i] != (void *)0)
-		{
-			printf("%s", echo[i]);
-			i++;
-		}
+		printf("%s", shell->cmd[y]);
+		if (shell->cmd[y + 1])
+			printf(" ");
+		y++;
 	}
-	else
-		printf("%s", prompt);
-	if (shell->flag == 0)
+	if (flag == 0)
 		printf("\n");
 }

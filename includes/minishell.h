@@ -6,26 +6,41 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/21 19:32:50 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:50:35 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
 
-# include "../libft/libft.h"
+# define DQT 	'"'
+# define SQT	'\''
+# define SPC	' '
 
 typedef struct s_shell
 {
 	char	*prompt;
 	char	***env_variables;
+  char	**cmd;
 	int		flag;
+	int		isvoid;
 }				t_shell;
+
+typedef struct s_aux_parse
+{
+	int		i;
+	int		x;
+	int		check;
+	int		start;
+	int		len;
+	int		num_str;
+}				t_aux_parse;
 
 // Builtins
 void		ft_pwd(void);
@@ -33,6 +48,11 @@ void		ft_echo(t_shell *shell, char *prompt);
 
 // Signal handlers
 void		sigint_handler(int sig);
+
+//Parseo
+char	**parse_prompt(t_shell *shell, char *prompt);
+int		even_quotes(t_shell *shell);
+int		num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
 char		*join_array(char **array, int start);
