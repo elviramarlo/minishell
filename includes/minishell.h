@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/21 20:50:35 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:30:11 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_shell
 {
 	char	*prompt;
 	char	***env_variables;
-  char	**cmd;
+	char	**cmd;
 	int		flag;
 	int		isvoid;
 }				t_shell;
@@ -44,15 +44,15 @@ typedef struct s_aux_parse
 
 // Builtins
 void		ft_pwd(void);
-void		ft_echo(t_shell *shell, char *prompt);
+void		ft_echo(t_shell *shell);
 
 // Signal handlers
 void		sigint_handler(int sig);
 
 //Parseo
-char	**parse_prompt(t_shell *shell, char *prompt);
-int		even_quotes(t_shell *shell);
-int		num_str(char *prompt, t_aux_parse *parse);
+char		**parse_prompt(t_shell *shell, char *prompt);
+int			even_quotes(t_shell *shell);
+int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
 char		*join_array(char **array, int start);

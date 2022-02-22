@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/21 20:33:46 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:30:27 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	main(int argc, char **argv, char **env_var)
 	t_shell	shell;
 
 	signal(SIGINT, sigint_handler);
-	i = 0;
 	(void)argc;
 	(void)argv;
 	ft_bzero(&shell, sizeof(t_shell));
@@ -74,7 +73,6 @@ int	main(int argc, char **argv, char **env_var)
 		add_history(shell.prompt);
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
-		check_builtin(&shell);
 		shell.cmd = parse_prompt(&shell, shell.prompt);
 		check_cmd(&shell);
 		free(shell.prompt);
