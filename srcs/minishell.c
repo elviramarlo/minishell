@@ -6,13 +6,13 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/22 18:30:27 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:43:16 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	check_cmd(t_shell *shell)
+static int	check_cmd(t_shell *shell)
 {
 	int	i;
 
@@ -20,9 +20,15 @@ static void	check_cmd(t_shell *shell)
 	if (!shell->isvoid)
 	{
 		if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0)
+		{
 			ft_pwd();
+			return (1);
+		}
 		else if (!ft_strncmp(shell->cmd[i], "echo", 4))
+		{
 			ft_echo(shell);
+			return (1);
+		}
 		else
 		{
 			while (shell->cmd[i])
@@ -32,6 +38,7 @@ static void	check_cmd(t_shell *shell)
 			}
 		}
 	}
+	return (0);
 }
 
 void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
@@ -74,7 +81,10 @@ int	main(int argc, char **argv, char **env_var)
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
 		shell.cmd = parse_prompt(&shell, shell.prompt);
-		check_cmd(&shell);
+		if (!check_cmd(&shell))
+		{
+			printf("Command goes running goes here");
+		}
 		free(shell.prompt);
 	}
 }
