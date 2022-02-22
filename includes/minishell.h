@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/22 18:30:11 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/22 20:16:19 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
+# include <sys/stat.h>
 
 # define DQT 	'"'
 # define SQT	'\''
 # define SPC	' '
+# define FW_SLASH	'/'
 
 typedef struct s_shell
 {
@@ -30,6 +32,7 @@ typedef struct s_shell
 	char	**cmd;
 	int		flag;
 	int		isvoid;
+	pid_t	running_process_pid;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -55,7 +58,7 @@ int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
-char		*join_array(char **array, int start);
+char	*join_array(char **array, int start, char restorable_divider);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
