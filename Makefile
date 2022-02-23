@@ -6,7 +6,11 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
+<<<<<<< Updated upstream
 #    Updated: 2022/02/20 17:50:21 by elvmarti         ###   ########.fr        #
+=======
+#    Updated: 2022/02/23 15:43:53 by elvmarti         ###   ########.fr        #
+>>>>>>> Stashed changes
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +30,9 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_PARS)/parse.c \
 		$(SOURCE_PARS)/aux.c \
 		$(SOURCE_BUILT)/pwd.c \
-		$(SOURCE_BUILT)/echo.c
+		$(SOURCE_BUILT)/echo.c \
+		$(SOURCE_BUILT)/export.c \
+		$(SOURCE_BUILT)/exit.c
 
 
 OBJS = $(SRCS:.c=.o)

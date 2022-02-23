@@ -6,7 +6,11 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2022/02/21 20:50:35 by elvmarti         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/22 20:43:36 by elvmarti         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +33,6 @@ typedef struct s_shell
 	int		isvoid;
 	char	**cmd;
 }				t_shell;
-
 typedef struct s_aux_parse
 {
 	int		i;
@@ -41,6 +44,7 @@ typedef struct s_aux_parse
 }				t_aux_parse;
 
 // Builtins
+<<<<<<< Updated upstream
 void	ft_pwd(void);
 void	ft_echo(t_shell *shell);
 
@@ -48,6 +52,23 @@ void	ft_echo(t_shell *shell);
 char	**parse_prompt(t_shell *shell, char *prompt);
 int		even_quotes(t_shell *shell);
 int		num_str(char *prompt, t_aux_parse *parse);
+=======
+void		ft_pwd(void);
+void		ft_echo(t_shell *shell);
+void		ft_export(t_shell *shell);
+void		ft_exit();
+
+// Signal handlers
+void		sigint_handler(int sig);
+
+//Parse
+char		**parse_prompt(t_shell *shell, char *prompt);
+int			even_quotes(t_shell *shell);
+int			num_str(char *prompt, t_aux_parse *parse);
+
+// Utils
+char		*join_array(char **array, int start);
+>>>>>>> Stashed changes
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
