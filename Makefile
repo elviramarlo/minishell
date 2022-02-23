@@ -6,11 +6,7 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-<<<<<<< Updated upstream
-#    Updated: 2022/02/20 17:50:21 by elvmarti         ###   ########.fr        #
-=======
-#    Updated: 2022/02/23 15:43:53 by elvmarti         ###   ########.fr        #
->>>>>>> Stashed changes
+#    Updated: 2022/02/23 16:01:51 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +19,16 @@ INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
 SOURCE_BUILT = $(SOURCE_DIR)/builtins
 SOURCE_PARS = $(SOURCE_DIR)/parser
+SOURCE_UTILS = $(SOURCE_DIR)/utils
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
+
 
 SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_PARS)/parse.c \
 		$(SOURCE_PARS)/aux.c \
+		$(SOURCE_DIR)/signal_handlers.c \
+		$(SOURCE_UTILS)/array_utils.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c \
 		$(SOURCE_BUILT)/export.c \
@@ -43,7 +43,7 @@ LIBFT = $(LIBFTPATH)$(LIBFTNAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 		@echo $(PURPLE)- Compiling - $(RESET)
-		$(CC) ${CFLAGS} ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
+		$(CC) ${CFLAGS} -O3 ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
 
 $(DEBUG_NAME): $(OBJS) $(LIBFT)
 		@echo $(BLUE)- Compiling debug - $(RESET)
