@@ -6,7 +6,7 @@
 #    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/21 19:31:40 by gaguado-         ###   ########.fr        #
+#    Updated: 2022/02/23 16:50:10 by gaguado-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
 SOURCE_BUILT = $(SOURCE_DIR)/builtins
+SOURCE_NON_BUILT = $(SOURCE_DIR)/non_builtins
 SOURCE_PARS = $(SOURCE_DIR)/parser
 SOURCE_UTILS = $(SOURCE_DIR)/utils
 LIBFTPATH = ./libft/
@@ -29,6 +30,7 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_PARS)/aux.c \
 		$(SOURCE_DIR)/signal_handlers.c \
 		$(SOURCE_UTILS)/array_utils.c \
+		$(SOURCE_NON_BUILT)/search_program_on_path.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c
 

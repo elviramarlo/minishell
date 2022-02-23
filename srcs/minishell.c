@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/22 18:43:16 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/23 21:01:15 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 	{
 		temp = ft_split(env_var[i], '=');
 		shell->env_variables[i] = malloc(sizeof(char *) * 2);
-		shell->env_variables[i][0] = temp[0];
-		shell->env_variables[i][1] = join_array(temp, 1);
+		shell->env_variables[i][0] = ft_strdup(temp[0]);
+		shell->env_variables[i][1] = join_array(temp, 1, '=');
 		free(temp);
 		i++;
 	}
@@ -67,6 +67,7 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
+	int i = 0;
 
 	signal(SIGINT, sigint_handler);
 	(void)argc;
@@ -74,6 +75,11 @@ int	main(int argc, char **argv, char **env_var)
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
 	add_history(NULL);
+	while (shell.env_variables[i])
+	{
+		printf("ENV Vars: %s=%s\n", shell.env_variables[i][0], shell.env_variables[i][1]);
+		i++;
+	}
 	while (1)
 	{
 		shell.prompt = readline(CYAN"minishell> "RESET);
@@ -83,7 +89,8 @@ int	main(int argc, char **argv, char **env_var)
 		shell.cmd = parse_prompt(&shell, shell.prompt);
 		if (!check_cmd(&shell))
 		{
-			printf("Command goes running goes here");
+			// shell.running_process_pid = fork();
+			printf("%s\n", search_program_on_path(&shell));
 		}
 		free(shell.prompt);
 	}

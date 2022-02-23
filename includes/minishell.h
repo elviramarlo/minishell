@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/22 18:30:11 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/23 21:00:57 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
-char		*join_array(char **array, int start);
+char	*join_array(char **array, int start, char restorable_divider);
+
+// Launcher
+char		**find_env_variable(char *name, t_shell *shell);
+char		*search_program_on_path(t_shell *shell);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
