@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/22 20:16:44 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:43:16 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,56 +57,11 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 		temp = ft_split(env_var[i], '=');
 		shell->env_variables[i] = malloc(sizeof(char *) * 2);
 		shell->env_variables[i][0] = temp[0];
-		shell->env_variables[i][1] = join_array(temp, 1, '=');
+		shell->env_variables[i][1] = join_array(temp, 1);
 		free(temp);
 		i++;
 	}
 	shell->env_variables[i] = NULL;
-}
-
-char **find_env_variable(char* name, t_shell *shell)
-{
-	int i;
-
-	i = 0;
-	while (shell->env_variables[i])
-	{
-		if (ft_strcmp(shell->env_variables[i][0], name))
-			return (shell->env_variables[i][0]);
-		i++;
-	}
-	return (NULL);
-}
-
-// TODO: Free stat result
-char	*search_program_on_path(t_shell *shell)
-{
-	struct stat	*stat_result;
-	char		*temp;
-	char		**path_val;
-	char		**split_path;
-	int			i;
-
-	i = 0;
-	stat_result = malloc(sizeof(struct stat *));
-	if (shell->isvoid)
-		return (NULL);
-	if (ft_strchr(shell->cmd[0], '/'))
-	{
-		stat(shell->cmd[0], stat_result);
-		if (access(shell->cmd[0], X_OK) != -1 && S_ISREG(stat_result->st_mode))
-			return (ft_strdup(shell->cmd[0]));
-		return (NULL);
-	}
-	path_val = find_env_variable("PATH", &shell);
-	if (!path_val)
-		return (NULL);
-	split_path = ft_split(path_val[1], ':');
-	while (split_path[i])
-	{
-
-	}
-	return (NULL);
 }
 
 int	main(int argc, char **argv, char **env_var)
@@ -128,8 +83,7 @@ int	main(int argc, char **argv, char **env_var)
 		shell.cmd = parse_prompt(&shell, shell.prompt);
 		if (!check_cmd(&shell))
 		{
-			shell.running_process_pid = fork();
-			printf("%s\n", search_program_on_path(&shell));
+			printf("Command goes running goes here");
 		}
 		free(shell.prompt);
 	}
