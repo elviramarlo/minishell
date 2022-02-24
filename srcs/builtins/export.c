@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/24 17:17:20 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:23:29 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	create_tmp(t_shell *shell, int env_len, int cmd_len)
 			tmp[i] = malloc(sizeof(char *) * 2);
 			tmp[i][0] = ft_strdup(split_tmp[0]);
 			if (split_tmp[1])
-				tmp[i][1] = ft_strdup(join_array(split_tmp, 1));
+				tmp[i][1] = ft_strdup(join_array(split_tmp, 1, 0));
 			else
 				tmp[i][1] = ft_strdup("\0");
 			i_aux = 0;
