@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_program_on_path.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:30:32 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/23 18:42:33 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/24 18:46:40 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*get_file_path_expanded(t_shell *shell, char **split_path)
 			free(stat_result);
 			return (full_exec_path);
 		}
-		free(full_exec_path);
+		//free(full_exec_path);
 		i++;
 	}
 	free(stat_result);
