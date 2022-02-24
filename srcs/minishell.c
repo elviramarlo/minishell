@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/23 16:02:24 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:41:45 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,28 @@ static int	check_cmd(t_shell *shell)
 	i = 0;
 	if (!shell->isvoid)
 	{
-		if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0)
+		if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0
+			&& ft_strlen(shell->cmd[i]) == 3)
 		{
 			ft_pwd();
 			return (1);
 		}
-		else if (!ft_strncmp(shell->cmd[i], "echo", 4))
+		else if (!ft_strncmp(shell->cmd[i], "echo", 4)
+			&& ft_strlen(shell->cmd[i]) == 4)
 		{
 			ft_echo(shell);
 			return (1);
 		}
-		else if (!ft_strncmp(shell->cmd[i], "export", 6))
+		else if (!ft_strncmp(shell->cmd[i], "export", 6)
+			&& ft_strlen(shell->cmd[i]) == 6)
 		{
 			ft_export(shell);
 			return (1);
 		}
-		else if (!ft_strncmp(shell->cmd[i], "exit", 4))
+		else if (!ft_strncmp(shell->cmd[i], "exit", 4)
+			&& ft_strlen(shell->cmd[i]) == 4)
 		{
-			ft_exit();
+			ft_exit(shell);
 			return (1);
 		}
 		else

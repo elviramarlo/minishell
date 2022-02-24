@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:49:52 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/23 16:02:03 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/24 16:38:21 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,19 @@ char	*join_array(char **array, int start)
 		i++;
 	}
 	return (ret);
+}
+
+void	free_array(char ***array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i][0]),
+		free(array[i][1]);
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

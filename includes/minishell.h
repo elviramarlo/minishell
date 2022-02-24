@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/23 16:03:45 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/24 16:38:25 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_aux_parse
 void		ft_pwd(void);
 void		ft_echo(t_shell *shell);
 void		ft_export(t_shell *shell);
-void		ft_exit();
+void		ft_exit(t_shell *shell);
 
 // Signal handlers
 void		sigint_handler(int sig);
@@ -57,6 +57,8 @@ int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
 char		*join_array(char **array, int start);
+void		free_array(char ***array);
+int			ft_isdigit_str(char *str);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
