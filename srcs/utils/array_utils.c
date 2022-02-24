@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:49:52 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/02/23 21:00:32 by gaguado-         ###   ########.fr       */
@@ -36,4 +36,19 @@ char	*join_array(char **array, int start, char restorable_divider)
 		i++;
 	}
 	return (ret);
+}
+
+void	free_array(char ***array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i][0]),
+		free(array[i][1]);
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/02/23 21:00:57 by gaguado-         ###   ########.fr       */
@@ -31,7 +31,6 @@ typedef struct s_shell
 	int		flag;
 	int		isvoid;
 }				t_shell;
-
 typedef struct s_aux_parse
 {
 	int		i;
@@ -45,6 +44,8 @@ typedef struct s_aux_parse
 // Builtins
 void		ft_pwd(void);
 void		ft_echo(t_shell *shell);
+void		ft_export(t_shell *shell);
+void		ft_exit(t_shell *shell);
 
 // Signal handlers
 void		sigint_handler(int sig);
@@ -55,7 +56,9 @@ int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
-char	*join_array(char **array, int start, char restorable_divider);
+void		free_array(char ***array);
+int			ft_isdigit_str(char *str);
+char	  *join_array(char **array, int start, char restorable_divider);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);

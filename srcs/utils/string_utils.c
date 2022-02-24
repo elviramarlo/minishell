@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 20:57:41 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/23 16:56:13 by elvmarti         ###   ########.fr       */
+/*   Created: 2022/02/23 16:24:34 by elvmarti          #+#    #+#             */
+/*   Updated: 2022/02/23 16:24:48 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-void	*ft_memcpy(void *s1, const void *s2, size_t n)
+int ft_isdigit_str(char *str)
 {
-	size_t			i;
-	unsigned char	*dest;
-	unsigned char	*src;
+	int	i;
 
-	dest = (unsigned char *)s1;
-	src = (unsigned char *)s2;
 	i = 0;
-	if (src == dest)
-		return (0);
-	while (i < n)
+	while(str[i])
 	{
-		dest[i] = src[i];
-		i++;
+		if (ft_isdigit(str[i]))
+			i++;
+		else
+			return (0);
 	}
-	return (dest);
+	return (1);
 }

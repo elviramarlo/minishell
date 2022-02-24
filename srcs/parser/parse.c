@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/21 20:44:38 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/22 21:04:52 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**parse_prompt(t_shell *shell, char *prompt)
 	cmd[parse.x] = 0;
 	parse.i = 0;
 	parse.x = 0;
-	if (cmd[0] == 0)
+	if (!cmd || cmd[0] == 0)
 		shell->isvoid = 1;
 	return (cmd);
 }
