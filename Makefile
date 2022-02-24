@@ -18,6 +18,7 @@ DEBUG_NAME = minishell_debug
 INCLUDES = includes/minishell.h
 SOURCE_DIR= srcs
 SOURCE_BUILT = $(SOURCE_DIR)/builtins
+SOURCE_NON_BUILT = $(SOURCE_DIR)/non_builtins
 SOURCE_PARS = $(SOURCE_DIR)/parser
 SOURCE_UTILS = $(SOURCE_DIR)/utils
 LIBFTPATH = ./libft/
@@ -30,6 +31,7 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_DIR)/signal_handlers.c \
 		$(SOURCE_UTILS)/array_utils.c \
 		$(SOURCE_UTILS)/string_utils.c \
+		$(SOURCE_NON_BUILT)/search_program_on_path.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c \
 		$(SOURCE_BUILT)/export.c \
