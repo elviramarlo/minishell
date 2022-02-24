@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:30:32 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/23 18:42:33 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/24 20:06:02 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**find_env_variable(char *name, t_shell *shell)
 	while (shell->env_variables[i])
 	{
 		if (ft_strcmp(shell->env_variables[i][0], name))
-			return (&shell->env_variables[i][0]);
+			return (shell->env_variables[i]);
 		i++;
 	}
 	return (NULL);
@@ -50,7 +50,7 @@ static char	*get_file_path_expanded(t_shell *shell, char **split_path)
 	int			i;
 
 	i = 0;
-	stat_result = malloc(sizeof(struct stat *));
+	stat_result = malloc(sizeof(struct stat));
 	while (split_path[i])
 	{
 		temp = ft_strjoin(split_path[i], "/");
@@ -60,9 +60,11 @@ static char	*get_file_path_expanded(t_shell *shell, char **split_path)
 			&& ((stat_result->st_mode) & S_IFMT) == S_IFREG)
 		{
 			free(stat_result);
+			free(temp);
 			return (full_exec_path);
 		}
 		free(full_exec_path);
+		free(temp);
 		i++;
 	}
 	free(stat_result);
@@ -74,7 +76,9 @@ char	*search_program_on_path(t_shell *shell)
 	char	**path_val;
 	char	**split_path;
 	char	*expanded_path;
+	int		i;
 
+	i = 0;
 	if (shell->isvoid)
 		return (NULL);
 	if (ft_strchr(shell->cmd[0], '/'))
@@ -84,6 +88,8 @@ char	*search_program_on_path(t_shell *shell)
 		return (NULL);
 	split_path = ft_split(path_val[1], ':');
 	expanded_path = get_file_path_expanded(shell, split_path);
+	while (split_path[i])
+		free(split_path[i++]);
 	free(split_path);
 	return (expanded_path);
 }
