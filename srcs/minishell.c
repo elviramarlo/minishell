@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/23 16:41:45 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/25 16:39:15 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 		shell->env_variables[i] = malloc(sizeof(char *) * 2);
 		shell->env_variables[i][0] = ft_strdup(temp[0]);
 		shell->env_variables[i][1] = join_array(temp, 1, '=');
+		free(temp[0]);
 		free(temp);
 		i++;
 	}
@@ -81,6 +82,7 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
+	char	*temp;
 	int i = 0;
 
 	signal(SIGINT, sigint_handler);
@@ -104,7 +106,10 @@ int	main(int argc, char **argv, char **env_var)
 		if (!check_cmd(&shell))
 		{
 			// shell.running_process_pid = fork();
-			printf("%s\n", search_program_on_path(&shell));
+			temp = search_program_on_path(&shell);
+			printf("%s\n", temp);
+			if (temp)
+				free(temp);
 		}
 		free(shell.prompt);
 	/* 	int i = 0;
