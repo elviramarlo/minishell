@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:30:32 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/24 18:46:40 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/25 15:39:02 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**find_env_variable(char *name, t_shell *shell)
 	while (shell->env_variables[i])
 	{
 		if (ft_strcmp(shell->env_variables[i][0], name))
-			return (&shell->env_variables[i][0]);
+			return (shell->env_variables[i]);
 		i++;
 	}
 	return (NULL);
@@ -50,7 +50,7 @@ static char	*get_file_path_expanded(t_shell *shell, char **split_path)
 	int			i;
 
 	i = 0;
-	stat_result = malloc(sizeof(struct stat *));
+	stat_result = malloc(sizeof(struct stat));
 	while (split_path[i])
 	{
 		temp = ft_strjoin(split_path[i], "/");
@@ -62,7 +62,7 @@ static char	*get_file_path_expanded(t_shell *shell, char **split_path)
 			free(stat_result);
 			return (full_exec_path);
 		}
-		//free(full_exec_path);
+		free(full_exec_path);
 		i++;
 	}
 	free(stat_result);

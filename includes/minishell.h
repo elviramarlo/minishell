@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/24 19:07:25 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/25 16:58:07 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_shell
 	int		flag;
 	int		isvoid;
 }				t_shell;
+
 typedef struct s_aux_parse
 {
 	int		i;
@@ -58,9 +59,10 @@ int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
-void		free_array(char ***array);
+void		free_matrix(char ***array);
+void		free_array(char **array);
 int			ft_isdigit_str(char *str);
-char	  *join_array(char **array, int start, char restorable_divider);
+char		*join_array(char **array, int start, char restorable_divider);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);
