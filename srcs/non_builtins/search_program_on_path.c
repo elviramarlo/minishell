@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   search_program_on_path.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:30:32 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/02/26 18:31:59 by gaguado-         ###   ########.fr       */

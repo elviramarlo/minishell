@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/26 17:42:50 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:02:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 
-# define DQT 	'"'
-# define SQT	'\''
-# define SPC	' '
+# define C_DQ 	'"'
+# define C_SQ	'\''
+# define C_SP	' '
+# define C_EQ	'='
 
 typedef struct s_shell
 {
 	char	*prompt;
 	char	***env_variables;
 	char	**cmd;
-	int		flag;
 	int		isvoid;
 	char	*currently_running_cmd_path;
 	int		last_process_result;
@@ -51,22 +51,28 @@ typedef struct s_aux_parse
 
 // Builtins
 void		ft_pwd(void);
+void		ft_cd(t_shell *shell);
 void		ft_echo(t_shell *shell);
-void		ft_export(t_shell *shell);
 void		ft_exit(t_shell *shell);
+void		ft_env(t_shell *shell);
+void		ft_export(t_shell *shell);
+void		ft_unset(t_shell *shell);
+void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers
 void		sigint_handler(int sig);
 
-//Parseo
+// Parse
 char		**parse_prompt(t_shell *shell, char *prompt);
 int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
-void		free_array(char ***array);
+char		*join_array(char **array, int start, char restorable_divider);
+void		free_matrix(char ***array);
+void		free_array(char **array);
+void		print_name(void);
 int			ft_isdigit_str(char *str);
-char	  *join_array(char **array, int start, char restorable_divider);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);

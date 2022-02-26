@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/26 18:14:39 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:03:02 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ static int	check_cmd(t_shell *shell)
 	i = 0;
 	if (!shell->isvoid)
 	{
-		if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0
+		if (!even_quotes(shell))
+		{
+			printf(RED"Error: odd quotes\n"RESET);
+			return (1);
+		}
+		else if (!ft_strncmp(shell->cmd[i], "pwd", 3)
 			&& ft_strlen(shell->cmd[i]) == 3)
 		{
 			ft_pwd();
@@ -37,10 +42,28 @@ static int	check_cmd(t_shell *shell)
 			ft_export(shell);
 			return (1);
 		}
+		else if (!ft_strncmp(shell->cmd[i], "unset", 5)
+			&& ft_strlen(shell->cmd[i]) == 5)
+		{
+			ft_unset(shell);
+			return (1);
+		}
 		else if (!ft_strncmp(shell->cmd[i], "exit", 4)
 			&& ft_strlen(shell->cmd[i]) == 4)
 		{
 			ft_exit(shell);
+			return (1);
+		}
+		else if (!ft_strncmp(shell->cmd[i], "env", 3)
+			&& ft_strlen(shell->cmd[i]) == 3 && shell->cmd[1] == 0)
+		{
+			ft_env(shell);
+			return (1);
+		}
+		else if (!ft_strncmp(shell->cmd[i], "cd", 2)
+			&& ft_strlen(shell->cmd[i]) == 2)
+		{
+			ft_cd(shell);
 			return (1);
 		}
 		else
@@ -68,11 +91,10 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 	shell->env_variables = malloc(sizeof(char **) * env_var_count + 1);
 	while (env_var[i])
 	{
-		temp = ft_split(env_var[i], '=');
+		temp = ft_split(env_var[i], C_EQ);
 		shell->env_variables[i] = malloc(sizeof(char *) * 2);
 		shell->env_variables[i][0] = ft_strdup(temp[0]);
-		shell->env_variables[i][1] = join_array(temp, 1, '=');
-		free(temp[0]);
+		shell->env_variables[i][1] = join_array(temp, 1, C_EQ);
 		free(temp);
 		i++;
 	}
@@ -119,6 +141,14 @@ int	main(int argc, char **argv, char **env_var)
 	(void)argv;
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
+
+	//add_history(NULL);
+	print_name();
+/* 	while (shell.env_variables[i])
+	{
+		printf("ENV Vars: %s=%s\n", shell.env_variables[i][0], shell.env_variables[i][1]);
+		i++;
+	} */
 	initialize_history(&shell);
 	while (1)
 	{
@@ -139,5 +169,6 @@ int	main(int argc, char **argv, char **env_var)
 				printf("minishell: command not found: %s\n", shell.cmd[0]);
 		}
 		free(shell.prompt);
+		//system("leaks minishell");
 	}
 }

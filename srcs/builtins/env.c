@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 20:40:36 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/26 23:02:22 by elvmarti         ###   ########.fr       */
+/*   Created: 2022/02/24 19:06:22 by elvmarti          #+#    #+#             */
+/*   Updated: 2022/02/25 15:40:38 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_exit(t_shell *shell)
+void	ft_env(t_shell *shell)
 {
-	if (!shell->cmd[1] || (ft_isdigit_str(shell->cmd[1]) && !shell->cmd[2]))
-		exit (0);
-	else if (!ft_isdigit_str(shell->cmd[1]) && !shell->cmd[2])
+	int	i;
+
+	i = 0;
+	while (shell->env_variables[i])
 	{
-		printf(RED"exit: %s: numeric argument required\n"RESET, shell->cmd[1]);
-		exit (0);
+		printf("%s=\"%s\"\n", shell->env_variables[i][0],
+			shell->env_variables[i][1]);
+		i++;
 	}
-	else
-		printf(RED"exit: too many arguments\n"RESET);
 }
