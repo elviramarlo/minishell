@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 17:37:48 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/26 18:14:39 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,35 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 	shell->env_variables[i] = NULL;
 }
 
+void	initialize_history(t_shell *shell)
+{
+	char	*home_path;
+	char	*read_history_line;
+	int		fd;
+
+	home_path = find_env_variable("HOME", shell)[1];
+	shell->history_file_route = ft_strjoin(home_path, "/.minishell_history");
+	fd = open(shell->history_file_route, O_RDONLY, 0644);
+	while (get_next_line(fd, &read_history_line) > 0)
+	{
+		if (read_history_line)
+			add_history(read_history_line);
+		free(read_history_line);
+	}
+	close(fd);
+}
+
+void	add_to_history(char *to_add, t_shell *shell)
+{
+	int	fd;
+
+	fd = open(shell->history_file_route, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	write(fd, to_add, ft_strlen(to_add));
+	write(fd, "\n", 1);
+	close(fd);
+	add_history(to_add);
+}
+
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
@@ -90,13 +119,13 @@ int	main(int argc, char **argv, char **env_var)
 	(void)argv;
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
-	add_history(NULL);
+	initialize_history(&shell);
 	while (1)
 	{
 		shell.prompt = readline(CYAN"minishell> "RESET);
-		add_history(shell.prompt);
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
+		add_to_history(shell.prompt, &shell);
 		shell.cmd = parse_prompt(&shell, shell.prompt);
 		if (!check_cmd(&shell))
 		{
