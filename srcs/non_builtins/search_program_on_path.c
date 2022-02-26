@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:30:32 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 16:43:45 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/26 18:31:59 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,23 @@ char	**find_env_variable(char *name, t_shell *shell)
 static char	*handle_full_path_in_command(t_shell *shell)
 {
 	struct stat	*stat_result;
+	char		*path;
+	char		*home_path;
 
-	stat_result = malloc(sizeof(struct stat *));
-	stat(shell->cmd[0], stat_result);
-	if (access(shell->cmd[0], X_OK) != -1
+	home_path = find_env_variable("HOME", shell)[1];
+	stat_result = malloc(sizeof(struct stat));
+	if (ft_strnstr(shell->cmd[0], "~/", 2))
+		path = ft_strjoin(home_path, &shell->cmd[0][1]);
+	else
+		path = ft_strdup(shell->cmd[0]);
+	stat(path, stat_result);
+	if (access(path, X_OK) != -1
 		&& ((stat_result->st_mode) & S_IFMT) == S_IFREG)
 	{
 		free(stat_result);
-		return (ft_strdup(shell->cmd[0]));
+		return (path);
 	}
+	free(path);
 	free(stat_result);
 	return (NULL);
 }
