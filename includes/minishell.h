@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/02/26 23:02:06 by elvmarti         ###   ########.fr       */
@@ -17,7 +17,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <sys/stat.h>
 
 # define C_DQ 	'"'
@@ -31,6 +33,10 @@ typedef struct s_shell
 	char	***env_variables;
 	char	**cmd;
 	int		isvoid;
+	char	*currently_running_cmd_path;
+	int		last_process_result;
+	char	*history_file_route;
+	pid_t	running_process_pid;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -71,6 +77,7 @@ int			ft_isdigit_str(char *str);
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
+void		handle_command(t_shell *shell);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
