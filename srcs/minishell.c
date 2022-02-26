@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 22:38:42 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:03:02 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_cmd(t_shell *shell)
 			printf(RED"Error: odd quotes\n"RESET);
 			return (1);
 		}
-		else if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0
+		else if (!ft_strncmp(shell->cmd[i], "pwd", 3)
 			&& ft_strlen(shell->cmd[i]) == 3)
 		{
 			ft_pwd();
@@ -60,6 +60,12 @@ static int	check_cmd(t_shell *shell)
 			ft_env(shell);
 			return (1);
 		}
+		else if (!ft_strncmp(shell->cmd[i], "cd", 2)
+			&& ft_strlen(shell->cmd[i]) == 2)
+		{
+			ft_cd(shell);
+			return (1);
+		}
 		else
 		{
 			while (shell->cmd[i])
@@ -85,10 +91,10 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 	shell->env_variables = malloc(sizeof(char **) * env_var_count + 1);
 	while (env_var[i])
 	{
-		temp = ft_split(env_var[i], '=');
+		temp = ft_split(env_var[i], C_EQ);
 		shell->env_variables[i] = malloc(sizeof(char *) * 2);
 		shell->env_variables[i][0] = ft_strdup(temp[0]);
-		shell->env_variables[i][1] = join_array(temp, 1, '=');
+		shell->env_variables[i][1] = join_array(temp, 1, C_EQ);
 		free(temp);
 		i++;
 	}

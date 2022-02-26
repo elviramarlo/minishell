@@ -6,26 +6,23 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/25 17:13:43 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:02:13 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// FALTA CAMBIAR EL VALOR SI EXISTE EL NOMBRE Y QUE DÉ ERROR SI METES UN
-// VALOR PERO SIN NOMBRE
-
 static char	***add_env_variables(t_shell *shell, char ***tmp, int i)
 {
-	int		cmd_len;
+	int		len;
 	char	**split_tmp;
 
-	cmd_len = 1;
-	while (shell->cmd[cmd_len])
+	len = 1;
+	while (shell->cmd[len])
 	{
-		if (ft_strchr(shell->cmd[cmd_len], '='))
+		if (ft_strchr(shell->cmd[len], C_EQ) && shell->cmd[len][0] != C_EQ)
 		{
-			split_tmp = ft_split(shell->cmd[cmd_len], '=');
+			split_tmp = ft_split(shell->cmd[len], C_EQ);
 			tmp[i] = malloc(sizeof(char *) * 2);
 			tmp[i][0] = ft_strdup(split_tmp[0]);
 			if (split_tmp[1])
@@ -35,7 +32,10 @@ static char	***add_env_variables(t_shell *shell, char ***tmp, int i)
 			free_array(split_tmp);
 			i++;
 		}
-		cmd_len++;
+		if (shell->cmd[len][0] == C_EQ)
+			printf(RED"export: '%s': not a valid identifier\n"RESET,
+				shell->cmd[len]);
+		len++;
 	}
 	tmp[i] = NULL;
 	return (tmp);
@@ -58,13 +58,6 @@ static void	create_array_env_variable(t_shell *shell, int env_len, int cmd_len)
 	tmp = add_env_variables(shell, tmp, i);
 	free_matrix(shell->env_variables);
 	shell->env_variables = tmp;
-	i = 0;
-	while (shell->env_variables[i])
-	{
-		printf("%s=%s\n", shell->env_variables[i][0],
-			shell->env_variables[i][1]);
-		i++;
-	}
 }
 
 static int	cmd_len(t_shell *shell)
@@ -76,11 +69,27 @@ static int	cmd_len(t_shell *shell)
 	i = 0;
 	while (shell->cmd[len])
 	{
-		if (!ft_strchr(shell->cmd[len], '=') && len > 0)
+		if (!ft_strchr(shell->cmd[len], C_EQ) && len > 0)
 			i++;
 		len++;
 	}
 	return (len - i);
+}
+
+static void	check_if_var_already_exists(t_shell *shell)
+{
+	char	**tmp_slipt;
+	int		i;
+
+	i = 1;
+	while (shell->cmd[i])
+	{
+		tmp_slipt = ft_split(shell->cmd[i], C_EQ);
+		if (find_env_variable(tmp_slipt[0], shell))
+			delete_env_variable(shell, tmp_slipt);
+		i++;
+	}
+	free_array(tmp_slipt);
 }
 
 void	ft_export(t_shell *shell)
@@ -99,8 +108,9 @@ void	ft_export(t_shell *shell)
 			i++;
 		}
 	}
-	else if (ft_strchr(shell->prompt, '='))
+	else if (ft_strchr(shell->prompt, C_EQ))
 	{
+		check_if_var_already_exists(shell);
 		while (shell->env_variables[env_len])
 			env_len++;
 		create_array_env_variable(shell, env_len, cmd_len(shell));

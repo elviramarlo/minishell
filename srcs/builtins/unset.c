@@ -6,13 +6,13 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 22:27:03 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/26 00:56:34 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:02:40 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	find_env_var_to_delete(t_shell *shell, char **env_var_to_delete)
+void	delete_env_variable(t_shell *shell, char **env_var_to_delete)
 {
 	char	***tmp;
 	int		env_len;
@@ -55,11 +55,11 @@ void	ft_unset(t_shell *shell)
 	i = 0;
 	while (shell->cmd[i])
 	{
-		if (ft_strchr(shell->cmd[i], '='))
+		if (ft_strchr(shell->cmd[i], C_EQ))
 			printf(RED"unset: '%s': not a valid identifier\n"RESET,
 				shell->cmd[i]);
 		else if (find_env_variable(shell->cmd[i], shell))
-			find_env_var_to_delete(shell, find_env_variable(shell->cmd[i],
+			delete_env_variable(shell, find_env_variable(shell->cmd[i],
 					shell));
 		i++;
 	}

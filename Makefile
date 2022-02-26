@@ -6,7 +6,7 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/25 22:27:46 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/02/26 19:50:12 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_BUILT)/export.c \
 		$(SOURCE_BUILT)/env.c \
 		$(SOURCE_BUILT)/unset.c \
-		$(SOURCE_BUILT)/exit.c
+		$(SOURCE_BUILT)/exit.c \
+		$(SOURCE_BUILT)/cd.c
 
 
 OBJS = $(SRCS:.c=.o)

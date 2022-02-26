@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 22:28:30 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:02:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 # include <readline/readline.h>
 # include <sys/stat.h>
 
-# define DQT 	'"'
-# define SQT	'\''
-# define SPC	' '
+# define C_DQ 	'"'
+# define C_SQ	'\''
+# define C_SP	' '
+# define C_EQ	'='
 
 typedef struct s_shell
 {
 	char	*prompt;
 	char	***env_variables;
 	char	**cmd;
-	int		flag;
 	int		isvoid;
 }				t_shell;
 
@@ -45,11 +45,13 @@ typedef struct s_aux_parse
 
 // Builtins
 void		ft_pwd(void);
+void		ft_cd(t_shell *shell);
 void		ft_echo(t_shell *shell);
-void		ft_export(t_shell *shell);
-void		ft_env(t_shell *shell);
 void		ft_exit(t_shell *shell);
+void		ft_env(t_shell *shell);
+void		ft_export(t_shell *shell);
 void		ft_unset(t_shell *shell);
+void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers
 void		sigint_handler(int sig);
@@ -60,16 +62,15 @@ int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 
 // Utils
+char		*join_array(char **array, int start, char restorable_divider);
 void		free_matrix(char ***array);
 void		free_array(char **array);
-int			ft_isdigit_str(char *str);
-char		*join_array(char **array, int start, char restorable_divider);
 void		print_name(void);
+int			ft_isdigit_str(char *str);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
-
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
