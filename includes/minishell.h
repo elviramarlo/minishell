@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 17:52:40 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/26 17:11:14 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <sys/stat.h>
 
 # define DQT 	'"'

@@ -6,12 +6,13 @@
 #    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/25 17:36:38 by gaguado-         ###   ########.fr        #
+#    Updated: 2022/02/26 17:08:02 by gaguado-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+READLINE_INSTALL_LOCATION = $(shell brew --prefix readline)
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra #-O3-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -I $(READLINE_INSTALL_LOCATION)/include #-O3-g3 -fsanitize=address
 
 NAME = minishell
 DEBUG_NAME = minishell_debug
@@ -23,7 +24,6 @@ SOURCE_PARS = $(SOURCE_DIR)/parser
 SOURCE_UTILS = $(SOURCE_DIR)/utils
 LIBFTPATH = ./libft/
 LIBFTNAME = libft.a
-
 
 SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_PARS)/parse.c \
@@ -47,11 +47,11 @@ LIBFT = $(LIBFTPATH)$(LIBFTNAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 		@echo $(PURPLE)- Compiling - $(RESET)
-		$(CC) ${CFLAGS} -O3 ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -o ${NAME}
+		$(CC) ${CFLAGS} -O3 ${OBJS} -I $(INCLUDES) -L. ${LIBFT} -lreadline -L $(READLINE_INSTALL_LOCATION)/lib -o ${NAME}
 
 $(DEBUG_NAME): $(OBJS) $(LIBFT)
 		@echo $(BLUE)- Compiling debug - $(RESET)
-		$(CC) ${CFLAGS} -I $(INCLUDES) -g ${SRCS} ${LIBFT} -lreadline -o ${DEBUG_NAME}
+		$(CC) ${CFLAGS} -I $(INCLUDES) -g ${SRCS} ${LIBFT} -lreadline -L $(READLINE_INSTALL_LOCATION)/lib -o ${DEBUG_NAME}
 
 $(LIBFT):		
 		@echo $(PURPLE)Libft $(RESET)
