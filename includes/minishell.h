@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/26 17:11:14 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/26 17:42:50 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_shell
 	int		isvoid;
 	char	*currently_running_cmd_path;
 	int		last_process_result;
+	char	*history_file_route;
 	pid_t	running_process_pid;
 }				t_shell;
 
