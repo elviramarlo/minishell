@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 17:00:35 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/25 22:38:42 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ static int	check_cmd(t_shell *shell)
 	i = 0;
 	if (!shell->isvoid)
 	{
-		if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0
+		if (!even_quotes(shell))
+		{
+			printf(RED"Error: odd quotes\n"RESET);
+			return (1);
+		}
+		else if (!ft_strncmp(shell->cmd[i], "pwd", 3) && shell->cmd[1] == 0
 			&& ft_strlen(shell->cmd[i]) == 3)
 		{
 			ft_pwd();
@@ -37,13 +42,19 @@ static int	check_cmd(t_shell *shell)
 			ft_export(shell);
 			return (1);
 		}
+		else if (!ft_strncmp(shell->cmd[i], "unset", 5)
+			&& ft_strlen(shell->cmd[i]) == 5)
+		{
+			ft_unset(shell);
+			return (1);
+		}
 		else if (!ft_strncmp(shell->cmd[i], "exit", 4)
 			&& ft_strlen(shell->cmd[i]) == 4)
 		{
 			ft_exit(shell);
 			return (1);
 		}
-			else if (!ft_strncmp(shell->cmd[i], "env", 3)
+		else if (!ft_strncmp(shell->cmd[i], "env", 3)
 			&& ft_strlen(shell->cmd[i]) == 3 && shell->cmd[1] == 0)
 		{
 			ft_env(shell);
@@ -87,7 +98,7 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
-	int i = 0;
+	//int i = 0;
 
 	signal(SIGINT, sigint_handler);
 	(void)argc;
@@ -95,11 +106,12 @@ int	main(int argc, char **argv, char **env_var)
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
 	add_history(NULL);
-	while (shell.env_variables[i])
+	print_name();
+/* 	while (shell.env_variables[i])
 	{
 		printf("ENV Vars: %s=%s\n", shell.env_variables[i][0], shell.env_variables[i][1]);
 		i++;
-	}
+	} */
 	while (1)
 	{
 		shell.prompt = readline(CYAN"minishell> "RESET);
@@ -113,6 +125,6 @@ int	main(int argc, char **argv, char **env_var)
 			printf("%s\n", search_program_on_path(&shell));
 		}
 		free(shell.prompt);
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 }
