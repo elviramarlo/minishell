@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 12:49:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/27 17:27:33 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/27 17:29:46 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*replace_with_env(char **str, char *name, t_shell *shell)
 static char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
 {
 	char	*ret;
-	char	*temp;
+	char	*var_name;
 	int		i;
 	int		z;
 
@@ -68,9 +68,9 @@ static char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
 		z = i + 1;
 		while (str[z] != '\0' && str[z] != '$')
 			z++;
-		temp = ft_substr(str, i + 1, z - i - 1);
-		ret = replace_with_env(&ret, temp, shell);
-		free(temp);
+		var_name = ft_substr(str, i + 1, z - i - 1);
+		ret = replace_with_env(&ret, var_name, shell);
+		free(var_name);
 		i = z;
 	}
 	return (ret);
