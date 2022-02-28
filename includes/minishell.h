@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/27 17:08:06 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:46:23 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_shell
 	int		last_process_result;
 	char	*history_file_route;
 	pid_t	running_process_pid;
+	int		isbuiltin;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -50,7 +51,7 @@ typedef struct s_aux_parse
 }				t_aux_parse;
 
 // Builtins
-void		ft_pwd(void);
+void		ft_pwd(t_shell *shell);
 void		ft_cd(t_shell *shell);
 void		ft_echo(t_shell *shell);
 void		ft_exit(t_shell *shell);

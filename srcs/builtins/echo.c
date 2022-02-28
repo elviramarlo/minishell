@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 22:02:19 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/21 21:03:50 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:45:14 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	ft_echo(t_shell *shell)
 	}
 	if (flag == 0)
 		printf("\n");
+	shell->isbuiltin = 1;
 }
