@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/26 23:03:02 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 15:58:04 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 		shell->env_variables[i] = malloc(sizeof(char *) * 2);
 		shell->env_variables[i][0] = ft_strdup(temp[0]);
 		shell->env_variables[i][1] = join_array(temp, 1, C_EQ);
+		free(temp[0]);
 		free(temp);
 		i++;
 	}
@@ -169,6 +170,7 @@ int	main(int argc, char **argv, char **env_var)
 				printf("minishell: command not found: %s\n", shell.cmd[0]);
 		}
 		free(shell.prompt);
-		//system("leaks minishell");
+		free_array(shell.cmd);
+		system("leaks minishell");
 	}
 }

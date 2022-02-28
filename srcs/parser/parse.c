@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/26 17:11:07 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 15:57:38 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 static void	make_str(char *prompt, t_aux_parse *parse, char **cmd)
 {
+	char	*tmp;
+	char	*tmp_substr;
+
 	if (parse->check && cmd[parse->x - 1])
 	{
 		parse->x--;
-		cmd[parse->x] = ft_strjoin(cmd[parse->x],
-				ft_substr(prompt, parse->start, parse->len));
+		tmp = ft_strdup(cmd[parse->x]);
+		free(cmd[parse->x]);
+		tmp_substr = ft_substr(prompt, parse->start, parse->len);
+		cmd[parse->x] = ft_strjoin(tmp, tmp_substr);
+		free(tmp);
+		free(tmp_substr);
 		parse->check = 0;
 	}
 	else
