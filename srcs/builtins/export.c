@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 19:34:04 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:38:53 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static char	***add_env_variables(t_shell *shell, char ***tmp, int i)
 	while (shell->cmd[len])
 	{
 		if (!ft_isalnum_str(shell->cmd[len], '='))
-			printf("Error\n");
+			printf(RED"export: '%s': not a valid identifier\n"RESET,
+				shell->cmd[len]);
 		else if (ft_strchr(shell->cmd[len], C_EQ) && shell->cmd[len][0] != C_EQ)
 		{
 			split_tmp = ft_split(shell->cmd[len], C_EQ);
