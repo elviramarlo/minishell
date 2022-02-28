@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 19:06:22 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/25 15:40:38 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/26 23:58:10 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_env(t_shell *shell)
 	i = 0;
 	while (shell->env_variables[i])
 	{
-		printf("%s=\"%s\"\n", shell->env_variables[i][0],
+		printf("%s=%s\n", shell->env_variables[i][0],
 			shell->env_variables[i][1]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/28 15:58:04 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/27 17:52:40 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	initialize_history(t_shell *shell)
 			add_history(read_history_line);
 		free(read_history_line);
 	}
+	free(read_history_line);
 	close(fd);
 }
 
@@ -142,14 +143,7 @@ int	main(int argc, char **argv, char **env_var)
 	(void)argv;
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
-
-	//add_history(NULL);
 	print_name();
-/* 	while (shell.env_variables[i])
-	{
-		printf("ENV Vars: %s=%s\n", shell.env_variables[i][0], shell.env_variables[i][1]);
-		i++;
-	} */
 	initialize_history(&shell);
 	while (1)
 	{
@@ -171,6 +165,6 @@ int	main(int argc, char **argv, char **env_var)
 		}
 		free(shell.prompt);
 		free_array(shell.cmd);
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 }

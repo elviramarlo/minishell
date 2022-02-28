@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
 /*   Updated: 2022/02/28 15:57:38 by elvmarti         ###   ########.fr       */
@@ -84,6 +84,7 @@ char	**parse_prompt(t_shell *shell, char *prompt)
 			parse.i++;
 		else
 			no_quotes(prompt, &parse, cmd);
+		check_for_env_vars(cmd, shell, &parse);
 	}
 	cmd[parse.x] = 0;
 	parse.i = 0;
