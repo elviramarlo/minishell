@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/28 16:59:28 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:01:37 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	initialize_history(t_shell *shell)
 
 	home_path = find_env_variable("HOME", shell)[1];
 	shell->history_file_route = ft_strjoin(home_path, "/.minishell_history");
-	fd = open(shell->history_file_route, O_RDONLY, 0644);
+	fd = open(shell->history_file_route, O_RDONLY | O_CREAT, 0644);
 	while (get_next_line(fd, &read_history_line) > 0)
 	{
 		if (read_history_line)
