@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/26 23:02:06 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/27 17:08:06 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		sigint_handler(int sig);
 char		**parse_prompt(t_shell *shell, char *prompt);
 int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
+void		check_for_env_vars(char **cmd, t_shell *shell, t_aux_parse *parse);
 
 // Utils
 char		*join_array(char **array, int start, char restorable_divider);

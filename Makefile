@@ -6,7 +6,7 @@
 #    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/26 17:08:02 by gaguado-         ###   ########.fr        #
+#    Updated: 2022/02/27 13:50:23 by gaguado-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBFTNAME = libft.a
 SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_PARS)/parse.c \
 		$(SOURCE_PARS)/malloc_parse.c \
+		$(SOURCE_PARS)/dollar_control.c \
 		$(SOURCE_DIR)/signal_handlers.c \
 		$(SOURCE_UTILS)/array_utils.c \
 		$(SOURCE_UTILS)/string_utils.c \
