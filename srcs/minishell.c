@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/02/27 17:52:40 by gaguado-         ###   ########.fr       */
@@ -164,5 +164,7 @@ int	main(int argc, char **argv, char **env_var)
 				printf("minishell: command not found: %s\n", shell.cmd[0]);
 		}
 		free(shell.prompt);
+		free_array(shell.cmd);
+		//system("leaks minishell");
 	}
 }

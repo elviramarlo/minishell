@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 22:27:03 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/26 23:02:40 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:01:19 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ void	delete_env_variable(t_shell *shell, char **env_var_to_delete)
 	free_matrix(shell->env_variables);
 	shell->env_variables = tmp;
 }
-
-/* 	i = 0;
-	while (shell->env_variables[i])
-	{
-		printf("%s=%s\n", shell->env_variables[i][0],
-			shell->env_variables[i][1]);
-		i++;
-	} */
 
 void	ft_unset(t_shell *shell)
 {
