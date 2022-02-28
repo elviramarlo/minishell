@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
+#    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/02/27 13:50:23 by gaguado-         ###   ########.fr        #
+#    Updated: 2022/02/28 16:59:55 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_UTILS)/array_utils.c \
 		$(SOURCE_UTILS)/string_utils.c \
 		$(SOURCE_UTILS)/print_name.c \
+		$(SOURCE_UTILS)/even_quotes.c \
 		$(SOURCE_NON_BUILT)/search_program_on_path.c \
 		$(SOURCE_NON_BUILT)/process_spawning_handling.c \
 		$(SOURCE_BUILT)/pwd.c \

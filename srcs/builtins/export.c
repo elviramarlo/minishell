@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 16:04:51 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:45:56 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,5 @@ void	ft_export(t_shell *shell)
 			env_len++;
 		create_array_env_variable(shell, env_len, cmd_len(shell));
 	}
+	shell->isbuiltin = 1;
 }

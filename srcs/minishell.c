@@ -6,76 +6,34 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/27 17:52:40 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:59:28 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	check_cmd(t_shell *shell)
+static void	check_is_builtin(t_shell *shell)
 {
-	int	i;
-
-	i = 0;
+	shell->isbuiltin = 0;
 	if (!shell->isvoid)
 	{
 		if (!even_quotes(shell))
-		{
 			printf(RED"Error: odd quotes\n"RESET);
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "pwd", 3)
-			&& ft_strlen(shell->cmd[i]) == 3)
-		{
-			ft_pwd();
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "echo", 4)
-			&& ft_strlen(shell->cmd[i]) == 4)
-		{
+		else if (ft_strcmp(shell->cmd[0], "pwd"))
+			ft_pwd(shell);
+		else if (ft_strcmp(shell->cmd[0], "echo"))
 			ft_echo(shell);
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "export", 6)
-			&& ft_strlen(shell->cmd[i]) == 6)
-		{
+		else if (ft_strcmp(shell->cmd[0], "export"))
 			ft_export(shell);
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "unset", 5)
-			&& ft_strlen(shell->cmd[i]) == 5)
-		{
+		else if (ft_strcmp(shell->cmd[0], "unset"))
 			ft_unset(shell);
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "exit", 4)
-			&& ft_strlen(shell->cmd[i]) == 4)
-		{
+		else if (ft_strcmp(shell->cmd[0], "exit"))
 			ft_exit(shell);
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "env", 3)
-			&& ft_strlen(shell->cmd[i]) == 3 && shell->cmd[1] == 0)
-		{
+		else if (ft_strcmp(shell->cmd[0], "env") && shell->cmd[1] == 0)
 			ft_env(shell);
-			return (1);
-		}
-		else if (!ft_strncmp(shell->cmd[i], "cd", 2)
-			&& ft_strlen(shell->cmd[i]) == 2)
-		{
+		else if (ft_strcmp(shell->cmd[0], "cd"))
 			ft_cd(shell);
-			return (1);
-		}
-		else
-		{
-			while (shell->cmd[i])
-			{
-				printf("%s\n", shell->cmd[i]);
-				i++;
-			}
-		}
 	}
-	return (0);
 }
 
 void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
@@ -152,7 +110,8 @@ int	main(int argc, char **argv, char **env_var)
 			exit(EXIT_SUCCESS);
 		add_to_history(shell.prompt, &shell);
 		shell.cmd = parse_prompt(&shell, shell.prompt);
-		if (!check_cmd(&shell))
+		check_is_builtin(&shell);
+		if (!shell.isbuiltin)
 		{
 			shell.currently_running_cmd_path = search_program_on_path(&shell);
 			if (shell.currently_running_cmd_path)

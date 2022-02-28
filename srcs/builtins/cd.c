@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:48:44 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/26 23:01:46 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:45:31 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ void	ft_cd(t_shell *shell)
 			printf(RED"cd: %s: No such file or directory\n"RESET,
 				shell->cmd[1]);
 	}
+	shell->isbuiltin = 1;
 }
