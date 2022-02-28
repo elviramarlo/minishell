@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/28 16:46:23 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:24:56 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		free_matrix(char ***array);
 void		free_array(char **array);
 void		print_name(void);
 int			ft_isdigit_str(char *str);
+int			ft_isalnum_str(char *str, char c);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);

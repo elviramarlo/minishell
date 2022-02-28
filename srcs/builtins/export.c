@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 16:45:56 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:34:04 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static char	***add_env_variables(t_shell *shell, char ***tmp, int i)
 	len = 1;
 	while (shell->cmd[len])
 	{
-		if (ft_strchr(shell->cmd[len], C_EQ) && shell->cmd[len][0] != C_EQ)
+		if (!ft_isalnum_str(shell->cmd[len], '='))
+			printf("Error\n");
+		else if (ft_strchr(shell->cmd[len], C_EQ) && shell->cmd[len][0] != C_EQ)
 		{
 			split_tmp = ft_split(shell->cmd[len], C_EQ);
 			tmp[i] = malloc(sizeof(char *) * 2);
@@ -108,7 +110,7 @@ void	ft_export(t_shell *shell)
 			i++;
 		}
 	}
-	else if (ft_strchr(shell->prompt, C_EQ))
+	else
 	{
 		check_if_var_already_exists(shell);
 		while (shell->env_variables[env_len])
