@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/01 20:53:22 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/01 21:10:12 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static void	no_quotes(char *prompt, t_aux_parse *parse, char **cmd)
 		parse->i++;
 		parse->len++;
 	}
-	if (prompt[parse->i - 1] != C_SP && (prompt[parse->i - 1] != '<'
-			|| prompt[parse->i] != '<') && (prompt[parse->i - 1] != '>'
-			|| prompt[parse->i] != '>') && parse->i)
+	if (prompt[parse->i - 1] != C_SP && parse->i && prompt[parse->i - 1] != C_PP &&
+		prompt[parse->i - 1] != '<'  && 
+		prompt[parse->i - 1] != '>')
 		make_str(prompt, parse, cmd);
 	if (ft_strchr("|<>", prompt[parse->i]) && prompt[parse->i])
 	{
