@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 12:49:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/27 17:29:46 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/01 20:41:49 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	check_for_env_vars(char **cmd, t_shell *shell, t_aux_parse *parse)
 {
 	char	*temp;
 
+	if (shell->prompt[parse->i - 1] == C_SP)
+		return ;
 	if (shell->prompt[parse->i - 1] == C_SQ || !cmd[parse->x - 1])
 		return ;
 	if (shell->prompt[parse->i - 1] == C_SP
