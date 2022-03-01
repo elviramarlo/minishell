@@ -84,7 +84,7 @@ char	**parse_prompt(t_shell *shell, char *prompt)
 			parse.i++;
 		else
 			no_quotes(prompt, &parse, cmd);
-		//check_for_env_vars(cmd, shell, &parse);
+		check_for_env_vars(cmd, shell, &parse);
 	}
 	cmd[parse.x] = 0;
 	parse.i = 0;
