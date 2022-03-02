@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/28 19:01:37 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:35:05 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,7 @@ void	add_to_history(char *to_add, t_shell *shell)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
-	int		i;
 
-	i = 0;
 	signal(SIGINT, sigint_handler);
 	(void)argc;
 	(void)argv;

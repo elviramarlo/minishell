@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 15:57:38 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:52:44 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	make_str(char *prompt, t_aux_parse *parse, char **cmd)
 
 static void	quotes(char *prompt, t_aux_parse *parse, char **cmd, char q)
 {
-	if (prompt[parse->i - 1] != C_SP && parse->i)
+	if (!ft_strchr(" |<>", prompt[parse->i - 1]) && parse->i)
 		parse->check = 1;
 	while (prompt[parse->i] == q)
 		parse->i++;
@@ -49,6 +49,12 @@ static void	quotes(char *prompt, t_aux_parse *parse, char **cmd, char q)
 	if (parse->len > 0)
 		make_str(prompt, parse, cmd);
 	parse->i++;
+	if (ft_strchr("|<>", prompt[parse->i]) && prompt[parse->i])
+	{
+		cmd[parse->x] = ft_substr(prompt, parse->i, 1);
+		parse->x++;
+		parse->i++;
+	}
 }
 
 static void	no_quotes(char *prompt, t_aux_parse *parse, char **cmd)
@@ -56,13 +62,19 @@ static void	no_quotes(char *prompt, t_aux_parse *parse, char **cmd)
 	if (prompt[parse->i - 1] == C_DQ || prompt[parse->i - 1] == C_SQ)
 		parse->check = 1;
 	parse->start = parse->i;
-	while (prompt[parse->i] != C_SP && prompt[parse->i] != C_DQ
-		&& prompt[parse->i] != C_SQ && prompt[parse->i])
+	while (!ft_strchr(" \"'|<>", prompt[parse->i]))
 	{
 		parse->i++;
 		parse->len++;
 	}
-	make_str(prompt, parse, cmd);
+	if (!ft_strchr(" |<>", prompt[parse->i - 1]) && parse->i)
+		make_str(prompt, parse, cmd);
+	if (ft_strchr("|<>", prompt[parse->i]) && prompt[parse->i])
+	{
+		cmd[parse->x] = ft_substr(prompt, parse->i, 1);
+		parse->x++;
+		parse->i++;
+	}
 }
 
 char	**parse_prompt(t_shell *shell, char *prompt)
