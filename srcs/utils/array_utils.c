@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:49:52 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/25 17:19:06 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/02 18:54:20 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*join_array(char **array, int start, char restorable_divider)
 			temp = ret;
 		}
 		ret = ft_strjoin(temp, array[i]);
+		free(array[i]);
 		free(temp);
 		i++;
 	}
