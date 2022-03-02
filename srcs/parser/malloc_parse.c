@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 17:44:02 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/02 17:29:01 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:35:27 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ int	num_str(char *prompt, t_aux_parse *p)
 		else if (prompt[p->i])
 			p->i++;
 	}
-	printf("NUM MALLOCS: %d\n", p->num_str);
 	return (p->num_str);
 }

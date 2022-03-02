@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/01 17:19:30 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:35:05 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	add_to_history(char *to_add, t_shell *shell)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
-	int i = 0;
 
 	signal(SIGINT, sigint_handler);
 	(void)argc;
@@ -120,12 +119,6 @@ int	main(int argc, char **argv, char **env_var)
 			}
 			else
 				printf("minishell: command not found: %s\n", shell.cmd[0]);
-		}
-		i = 0;
-		while (shell.cmd[i])
-		{
-			printf("CMD: %s\n", shell.cmd[i]);
-			i++;
 		}
 		free(shell.prompt);
 		free_array(shell.cmd);
