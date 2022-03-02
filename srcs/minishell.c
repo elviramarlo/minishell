@@ -68,7 +68,7 @@ void	initialize_history(t_shell *shell)
 
 	home_path = find_env_variable("HOME", shell)[1];
 	shell->history_file_route = ft_strjoin(home_path, "/.minishell_history");
-	fd = open(shell->history_file_route, O_RDONLY, 0644);
+	fd = open(shell->history_file_route, O_RDONLY | O_CREAT, 0644);
 	while (get_next_line(fd, &read_history_line) > 0)
 	{
 		if (read_history_line)

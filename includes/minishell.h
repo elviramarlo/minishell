@@ -76,6 +76,7 @@ void		free_matrix(char ***array);
 void		free_array(char **array);
 void		print_name(void);
 int			ft_isdigit_str(char *str);
+int			ft_isalnum_str(char *str, char c);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);
