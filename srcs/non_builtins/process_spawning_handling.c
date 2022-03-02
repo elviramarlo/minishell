@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/01 16:58:24 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:45:10 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ static char	**restore_env_var_for_command(t_shell *shell)
 void	handle_command(t_shell *shell)
 {
 	char	**restored_env_var;
-	int		i;
 
-	i = 0;
 	restored_env_var = restore_env_var_for_command(shell);
 	shell->running_process_pid = fork();
 	if (shell->running_process_pid == 0)
@@ -48,8 +46,6 @@ void	handle_command(t_shell *shell)
 	{
 		wait(&shell->last_process_result);
 		kill(shell->running_process_pid, SIGINT);
-		while (restored_env_var[i])
-			free(restored_env_var[i++]);
-		free(restored_env_var);
+		free_array(restored_env_var);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/02 17:35:05 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:44:46 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ int	main(int argc, char **argv, char **env_var)
 		}
 		free(shell.prompt);
 		free_array(shell.cmd);
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 }

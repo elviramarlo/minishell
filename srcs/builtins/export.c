@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 19:38:53 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:57:34 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ static void	check_if_var_already_exists(t_shell *shell)
 		if (find_env_variable(tmp_slipt[0], shell))
 			delete_env_variable(shell, tmp_slipt);
 		i++;
+		free_array(tmp_slipt);
 	}
-	free_array(tmp_slipt);
 }
 
 void	ft_export(t_shell *shell)
