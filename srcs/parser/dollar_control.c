@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 12:49:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/01 20:41:49 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:58:32 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
 {
 	char	*ret;
 	char	*var_name;
+	char	*temp2;
 	int		i;
 	int		z;
 
@@ -66,10 +67,18 @@ static char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
 	while (ft_strchr(&str[i], '$'))
 	{
 		z = i + 1;
-		while (str[z] != '\0' && str[z] != '$')
+		while (str[z] != '\0' && (ft_isalnum(str[z]) || str[z] == '_' || str[z] == '?'))
 			z++;
 		var_name = ft_substr(str, i + 1, z - i - 1);
 		ret = replace_with_env(&ret, var_name, shell);
+		free(var_name);
+		i = z - 1;
+		while (str[z] != '\0' && str[z] != '$')
+			z++;
+		temp2 = ft_substr(str, i + 1, z - i - 1);
+		var_name = ret;
+		ret = ft_strjoin(var_name, temp2);
+		free(temp2);
 		free(var_name);
 		i = z;
 	}
