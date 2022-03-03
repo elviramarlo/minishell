@@ -6,13 +6,13 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/03 15:33:19 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/03 19:52:54 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	check_is_builtin(t_shell *shell)
+void	check_is_builtin(t_shell *shell)
 {
 	shell->isbuiltin = 0;
 	if (!shell->isvoid)
@@ -109,9 +109,9 @@ int	main(int argc, char **argv, char **env_var)
 			exit(EXIT_SUCCESS);
 		add_to_history(shell.prompt, &shell);
 		shell.cmd = parse_prompt(&shell, shell.prompt);
-		check_is_builtin(&shell);
+/* 		check_is_builtin(&shell);
 		if (!shell.isbuiltin)
-		{
+		{ */
 			shell.currently_running_cmd_path = search_program_on_path(&shell);
 			if (shell.currently_running_cmd_path)
 			{
@@ -120,7 +120,7 @@ int	main(int argc, char **argv, char **env_var)
 			}
 			else
 				printf("minishell: command not found: %s\n", shell.cmd[0]);
-		}
+		//}
 		i = 0;
 		free(shell.prompt);
 		free_array(shell.cmd);

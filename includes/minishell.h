@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/03 18:25:06 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/03 20:02:18 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ typedef struct s_aux_parse
 	int		num_str;
 }				t_aux_parse;
 
+
 // Builtins
+void		check_is_builtin(t_shell *shell);
 void		ft_pwd(t_shell *shell);
 void		ft_cd(t_shell *shell);
 void		ft_echo(t_shell *shell);
@@ -89,7 +91,7 @@ void		handle_command(t_shell *shell);
 
 // Redir
 int			is_redirection(t_shell *shell, char c);
-void		handle_redirection(t_shell *shell);
+void		handle_redirection(t_shell *shell, int fd);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
