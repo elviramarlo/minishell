@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:59:28 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/03 18:29:38 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/03 20:17:40 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,15 @@
 void	handle_redir_output(t_shell *shell, int fd)
 {
 	if (shell->redir)
-		fd = open(shell->file_redirection, O_WRONLY | O_CREAT);
+		fd = open(shell->file_redirection, O_WRONLY | O_CREAT | O_TRUNC);
 	else if (shell->redir_doble)
 		fd = open(shell->file_redirection, O_WRONLY | O_CREAT | O_APPEND);
 	dup2(fd, STDOUT_FILENO);
 	shell->cmd = create_array_only_cmd(shell, '>');
 }
 
-void	handle_redirection(t_shell *shell)
+void	handle_redirection(t_shell *shell, int fd)
 {
-	int	fd;
-
-	fd = 0;
 	if (is_redirection(shell, '>'))
 		handle_redir_output(shell, fd);
 	else if (is_redirection(shell, '<'))
@@ -35,7 +32,7 @@ void	handle_redirection(t_shell *shell)
 		dup2(fd, STDIN_FILENO);
 		shell->cmd = create_array_only_cmd(shell, '<');
 	}
-	close(fd);
+	
 	shell->redir_doble = 0;
 	shell->redir = 0;
 }
