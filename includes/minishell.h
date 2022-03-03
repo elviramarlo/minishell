@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/01 18:41:11 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/03 18:25:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ typedef struct s_shell
 	char	*history_file_route;
 	pid_t	running_process_pid;
 	int		isbuiltin;
+	int		redir_doble;
+	int		redir;
+	char	*file_redirection;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -71,6 +74,7 @@ int			num_str(char *prompt, t_aux_parse *parse);
 void		check_for_env_vars(char **cmd, t_shell *shell, t_aux_parse *parse);
 
 // Utils
+char		**create_array_only_cmd(t_shell *shell, char c);
 char		*join_array(char **array, int start, char restorable_divider);
 void		free_matrix(char ***array);
 void		free_array(char **array);
@@ -82,6 +86,10 @@ int			ft_isalnum_str(char *str, char c);
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
 void		handle_command(t_shell *shell);
+
+// Redir
+int			is_redirection(t_shell *shell, char c);
+void		handle_redirection(t_shell *shell);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"

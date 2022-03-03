@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:49:52 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/02 18:54:20 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:32:02 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	**create_array_only_cmd(t_shell *shell, char c)
+{
+	char **new_array_cmd;
+	int	len;
+	int	i;
+
+	len = 0;
+	while (shell->cmd[len])
+	{
+		if (shell->cmd[len + 1][0] == c)
+			break ;
+		len++;
+	}
+	new_array_cmd = malloc(sizeof(char *) * (len + 2));
+	i = 0;
+	while (i <= len)
+	{
+		new_array_cmd[i] = ft_strdup(shell->cmd[i]);
+		i++;
+	}
+	new_array_cmd[i] = NULL;
+	return (new_array_cmd);
+}
 
 char	*join_array(char **array, int start, char restorable_divider)
 {

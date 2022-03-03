@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/02 17:45:10 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/03 18:22:39 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ void	handle_command(t_shell *shell)
 	restored_env_var = restore_env_var_for_command(shell);
 	shell->running_process_pid = fork();
 	if (shell->running_process_pid == 0)
+	{
+		if (is_redirection(shell, '>') || is_redirection(shell, '<'))
+			handle_redirection(shell);
 		execve(shell->currently_running_cmd_path, shell->cmd, restored_env_var);
+	}
 	else
 	{
 		wait(&shell->last_process_result);
