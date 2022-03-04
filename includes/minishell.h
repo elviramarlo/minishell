@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/03 20:02:18 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/04 22:44:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_shell
 	int		isbuiltin;
 	int		redir_doble;
 	int		redir;
+	int		redir_failed;
 	char	*file_redirection;
 }				t_shell;
 
@@ -53,7 +54,6 @@ typedef struct s_aux_parse
 	int		len;
 	int		num_str;
 }				t_aux_parse;
-
 
 // Builtins
 void		check_is_builtin(t_shell *shell);
@@ -68,6 +68,10 @@ void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers
 void		sigint_handler(int sig);
+
+// Redir
+int			is_redirection(t_shell *shell, char c);
+char		**handle_redirection(t_shell *shell, int fd);
 
 // Parse
 char		**parse_prompt(t_shell *shell, char *prompt);
@@ -88,10 +92,6 @@ int			ft_isalnum_str(char *str, char c);
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
 void		handle_command(t_shell *shell);
-
-// Redir
-int			is_redirection(t_shell *shell, char c);
-void		handle_redirection(t_shell *shell, int fd);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"

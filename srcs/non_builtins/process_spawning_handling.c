@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/03 20:21:50 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/04 22:47:30 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,34 @@ static char	**restore_env_var_for_command(t_shell *shell)
 void	handle_command(t_shell *shell)
 {
 	char	**restored_env_var;
-	int fd = 0;
+	int		fd;
+	char	**new_cmd;
 
+	fd = 0;
 	restored_env_var = restore_env_var_for_command(shell);
 	shell->running_process_pid = fork();
 	if (shell->running_process_pid == 0)
 	{
 		if (is_redirection(shell, '>') || is_redirection(shell, '<'))
-			handle_redirection(shell, fd);
-		check_is_builtin(shell);
-		if (shell->isbuiltin && fd)
-			dup2(STDOUT_FILENO, fd);
-		else if (!shell->isbuiltin)
-			execve(shell->currently_running_cmd_path, shell->cmd, restored_env_var);
+		{
+			new_cmd = handle_redirection(shell, fd);
+			check_is_builtin(shell);
+			if (!shell->isbuiltin && !shell->redir_failed)
+				execve(shell->currently_running_cmd_path, new_cmd,
+					restored_env_var);
+		}
+		else
+		{
+			check_is_builtin(shell);
+			if (!shell->isbuiltin)
+				execve(shell->currently_running_cmd_path, shell->cmd,
+					restored_env_var);
+		}
+		exit (0);
 	}
 	else
 	{
 		wait(&shell->last_process_result);
-		if (fd)
-			close(fd);
 		kill(shell->running_process_pid, SIGINT);
 		free_array(restored_env_var);
 	}
