@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:31:29 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/05 16:33:45 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:51:53 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	get_file_name(t_shell *shell, int *i, int doble_redir)
 {
 	if (doble_redir)
 	{
-		if (*i >= 1)
+		if (*i > 1)
 			parse_redir(shell->cmd[*i + 2], shell->cmd[*i - 2]);
 		shell->redir_doble = 1;
 		shell->file_redirection = ft_strdup(shell->cmd[*i + 2]);
