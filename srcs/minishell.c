@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/04 22:58:04 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/05 13:44:23 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	main(int argc, char **argv, char **env_var)
 			if (!shell.isbuiltin)
 			{
 				shell.currently_running_cmd_path = search_program_on_path(&shell);
-				if (shell.currently_running_cmd_path)
+				if (shell.currently_running_cmd_path || shell.cmd[0][0] == '>')
 				{
 					handle_command(&shell);
 					free(shell.currently_running_cmd_path);

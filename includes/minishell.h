@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/04 22:44:06 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:38:00 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 void		sigint_handler(int sig);
 
 // Redir
-int			is_redirection(t_shell *shell, char c);
-char		**handle_redirection(t_shell *shell, int fd);
+char		**handle_redirection(t_shell *shell);
+char		**handle_redir_aux(t_shell *shell, int *i, char **cmd);
+char		**handle_redir_output(t_shell *shell);
+char		**handle_redir_input(t_shell *shell);
 
 // Parse
 char		**parse_prompt(t_shell *shell, char *prompt);
@@ -80,7 +82,7 @@ int			num_str(char *prompt, t_aux_parse *parse);
 void		check_for_env_vars(char **cmd, t_shell *shell, t_aux_parse *parse);
 
 // Utils
-char		**create_array_only_cmd(t_shell *shell, char c);
+char		**create_array_only_cmd(t_shell *shell, char c, char c2);
 char		*join_array(char **array, int start, char restorable_divider);
 void		free_matrix(char ***array);
 void		free_array(char **array);

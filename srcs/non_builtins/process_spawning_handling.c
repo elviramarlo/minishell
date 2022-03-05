@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/04 22:47:30 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:08:52 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	handle_command(t_shell *shell)
 	shell->running_process_pid = fork();
 	if (shell->running_process_pid == 0)
 	{
-		if (is_redirection(shell, '>') || is_redirection(shell, '<'))
+		new_cmd = handle_redirection(shell);
+		if (new_cmd)
 		{
-			new_cmd = handle_redirection(shell, fd);
 			check_is_builtin(shell);
 			if (!shell->isbuiltin && !shell->redir_failed)
 				execve(shell->currently_running_cmd_path, new_cmd,
