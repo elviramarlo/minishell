@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_spawning_handling.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/05 17:09:41 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/07 15:54:38 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,37 @@ static char	**restore_env_var_for_command(t_shell *shell)
 	return (restored_env_var);
 }
 
-void	handle_command(t_shell *shell)
+static void	handle_child_pipes(int input_fd, int output_fd, int pipe)
+{
+	if (pipe == 1 || pipe == 0)
+		dup2(input_fd, STDOUT_FILENO);
+	if (pipe == 0 || pipe == -1)
+		dup2(output_fd, STDIN_FILENO);
+	close(input_fd);
+	close(output_fd);
+}
+
+void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 {
 	char	**restored_env_var;
-	int		fd;
 	char	**new_cmd;
+	int		running_process_pid;
 
-	fd = 0;
 	restored_env_var = restore_env_var_for_command(shell);
-	shell->running_process_pid = fork();
-	if (shell->running_process_pid == 0)
+	running_process_pid = fork();
+	if (pipe == -1)
+		shell->running_process_pid = running_process_pid;
+	if (running_process_pid == 0)
 	{
+		handle_child_pipes(input_fd, output_fd, pipe);
 		new_cmd = handle_redirection(shell);
-		if (new_cmd)
-		{
-			check_is_builtin(shell);
-			if (!shell->isbuiltin && !shell->redir_failed)
-				execve(shell->currently_running_cmd_path, new_cmd,
-					restored_env_var);
-		}
-		else
-		{
-			check_is_builtin(shell);
-			if (!shell->isbuiltin && !shell->redir_failed)
-				execve(shell->currently_running_cmd_path, shell->cmd,
-					restored_env_var);
-		}
-		exit (0);
+		if (!new_cmd)
+			new_cmd = shell->cmd;
+		check_is_builtin(shell);
+		if (!shell->isbuiltin && !shell->redir_failed)
+			execve(shell->currently_running_cmd_path, new_cmd,
+				restored_env_var);
+		exit (1);
 	}
-	else
-	{
-		wait(&shell->last_process_result);
-		kill(shell->running_process_pid, SIGINT);
-		free_array(restored_env_var);
-	}
+	free_array(restored_env_var);
 }
