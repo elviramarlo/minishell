@@ -1,2 +1,5 @@
-[ ] Make cd change oldpath enviroment variable
-[ ] Parse commands after redirection and pipes
+- [ ] Make cd change oldpath enviroment variable
+- [ ] SEGFAULT on null command (env_vars)
+- [ ] Revise builtins
+- [ ] Heredoc
+- [ ] Command not in the begging
