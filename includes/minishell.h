@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 17:25:50 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:59:56 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ typedef struct s_aux_parse
 
 // Builtins
 void		check_is_builtin(t_shell *shell);
-void		ft_pwd(t_shell *shell);
+void		ft_pwd(t_shell *shell, char **cmd);
 void		ft_cd(t_shell *shell, char **cmd);
-void		ft_echo(t_shell *shell);
-void		ft_exit(t_shell *shell);
+void		ft_echo(t_shell *shell, char **cmd);
+void		ft_exit(t_shell *shell, char **cmd);
 void		ft_env(t_shell *shell);
-void		ft_export(t_shell *shell);
-void		ft_unset(t_shell *shell);
+void		ft_export(t_shell *shell, char **cmd);
+void		ft_unset(t_shell *shell, char **cmd);
 void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers

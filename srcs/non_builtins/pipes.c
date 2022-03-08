@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/07 15:46:57 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:50:04 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	handle_pipes_and_command(t_shell *shell)
 		handle_pipe(i, shell);
 		if (!shell->isvoid)
 		{
-			if (ft_strcmp(shell->cmd[0], "exit"))
+			if (ft_strcmp(shell->cmd[pos_cmd(shell)], "exit"))
 				check_is_builtin(shell);
 			if (!shell->isbuiltin)
 				process_command(shell, pipe_count, pipe_fds, i);
@@ -87,6 +87,11 @@ void	handle_pipes_and_command(t_shell *shell)
 		i++;
 	}
 	waitpid(shell->running_process_pid, &shell->last_process_result, 0);
+	if(WIFEXITED(shell->last_process_result) ){
+		printf("%d %d %d\n",(shell->last_process_result >> 8), WEXITSTATUS(shell->last_process_result), shell->last_process_result);
+	} else {
+		printf("Hsa not exited");
+	}
 	close(pipe_fds[1]);
 	close(pipe_fds[0]);
 }

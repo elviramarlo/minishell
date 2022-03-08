@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 17:27:06 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:57:44 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ void	check_is_builtin(t_shell *shell)
 	{
 		if (!even_quotes(shell))
 			ft_error(ft_strdup("minishell: error: odd quotes"), 1, shell);
-		else if (ft_strcmp(shell->cmd[0], "pwd"))
-			ft_pwd(shell);
-		else if (ft_strcmp(shell->cmd[0], "echo"))
-			ft_echo(shell);
-		else if (ft_strcmp(shell->cmd[0], "export"))
-			ft_export(shell);
-		else if (ft_strcmp(shell->cmd[0], "unset"))
-			ft_unset(shell);
-		else if (ft_strcmp(shell->cmd[0], "exit"))
-			ft_exit(shell);
-		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "env") && shell->cmd[1] == 0)
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "pwd"))
+			ft_pwd(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "echo"))
+			ft_echo(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "export"))
+			ft_export(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "unset"))
+			ft_unset(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "exit"))
+			ft_exit(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "env")
+			&& shell->cmd[pos_cmd(shell) + 1] == 0)
 			ft_env(shell);
 		else if (ft_strcmp(shell->cmd[0], "cd"))
 			ft_cd(shell, &shell->cmd[pos_cmd(shell)]);

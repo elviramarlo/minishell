@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:31:29 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 16:40:45 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 19:13:51 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	parse_redir(char *cmd, t_shell *shell)
 	}
 	if (ft_strchr("|<>", cmd[0]))
 	{
-		ft_error(ft_strdup("Syntax error near unexpected token 'newline'"), 258,
+		ft_error(ft_strdup("Syntax error near unexpected token"), 258,
 			 shell);
-		exit(-1);
+		exit(258);
 	}
 }
 
