@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 19:52:44 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/06 23:54:29 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	make_str(char *prompt, t_aux_parse *parse, char **cmd)
 
 static void	quotes(char *prompt, t_aux_parse *parse, char **cmd, char q)
 {
-	if (!ft_strchr(" |<>", prompt[parse->i - 1]) && parse->i)
+	if (parse->i && !ft_strchr(" |<>", prompt[parse->i - 1]))
 		parse->check = 1;
 	while (prompt[parse->i] == q)
 		parse->i++;

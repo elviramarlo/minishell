@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/05 17:09:41 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/06 23:22:04 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ static char	**restore_env_var_for_command(t_shell *shell)
 void	handle_command(t_shell *shell)
 {
 	char	**restored_env_var;
-	int		fd;
 	char	**new_cmd;
 
-	fd = 0;
 	restored_env_var = restore_env_var_for_command(shell);
 	shell->running_process_pid = fork();
 	if (shell->running_process_pid == 0)
@@ -53,18 +51,21 @@ void	handle_command(t_shell *shell)
 				execve(shell->currently_running_cmd_path, new_cmd,
 					restored_env_var);
 		}
-		else
+		else if (!shell->redir_failed)
 		{
 			check_is_builtin(shell);
-			if (!shell->isbuiltin && !shell->redir_failed)
+			if (!shell->isbuiltin)
 				execve(shell->currently_running_cmd_path, shell->cmd,
 					restored_env_var);
 		}
-		exit (0);
+		/* printf("EXIT: %d\n", errno); */
+		exit (shell->errnum);
 	}
 	else
 	{
 		wait(&shell->last_process_result);
+		if (WIFEXITED(shell->last_process_result))
+			shell->last_process_result = WEXITSTATUS(shell->last_process_result);
 		kill(shell->running_process_pid, SIGINT);
 		free_array(restored_env_var);
 	}

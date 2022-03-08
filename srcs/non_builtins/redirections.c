@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:59:28 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/05 17:11:07 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/06 22:27:38 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ char	**handle_redir_input(t_shell *shell)
 		fd = open(shell->file_redirection, O_RDONLY);
 		if (fd < 0)
 		{
-			printf(RED"No such file or directory\n"RESET);
-			close(fd);
 			shell->redir_failed = 1;
+			ft_error(ft_strdup(strerror(errno)), errno, shell);
+			close(fd);
 		}
 		else
 		{
@@ -62,6 +62,7 @@ char	**handle_redirection(t_shell *shell)
 	shell->redir = 0;
 	shell->redir_doble = 0;
 	shell->redir_failed = 0;
+	errno = 0;
 	i = 0;
 	while (shell->cmd[i])
 	{

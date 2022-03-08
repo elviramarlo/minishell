@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/05 16:38:00 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/06 22:23:19 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <string.h>
 
 # define C_DQ 	'"'
 # define C_SQ	'\''
@@ -43,6 +46,7 @@ typedef struct s_shell
 	int		redir;
 	int		redir_failed;
 	char	*file_redirection;
+	int		errnum;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -87,6 +91,7 @@ char		*join_array(char **array, int start, char restorable_divider);
 void		free_matrix(char ***array);
 void		free_array(char **array);
 void		print_name(void);
+void		ft_error(char *msg, int errnum, t_shell *shell);
 int			ft_isdigit_str(char *str);
 int			ft_isalnum_str(char *str, char c);
 

@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/05 13:44:23 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/07 00:13:48 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_is_builtin(t_shell *shell)
 	if (!shell->isvoid)
 	{
 		if (!even_quotes(shell))
-			printf(RED"Error: odd quotes\n"RESET);
+			ft_error(ft_strdup("minishell: error: odd quotes"), 1, shell);
 		else if (ft_strcmp(shell->cmd[0], "pwd"))
 			ft_pwd(shell);
 		else if (ft_strcmp(shell->cmd[0], "echo"))
@@ -93,7 +93,6 @@ void	add_to_history(char *to_add, t_shell *shell)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
-	int	i;
 
 	signal(SIGINT, sigint_handler);
 	(void)argc;
@@ -104,6 +103,7 @@ int	main(int argc, char **argv, char **env_var)
 	initialize_history(&shell);
 	while (1)
 	{
+		shell.errnum = 0;
 		shell.prompt = readline(CYAN"minishell> "RESET);
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
@@ -111,7 +111,8 @@ int	main(int argc, char **argv, char **env_var)
 		shell.cmd = parse_prompt(&shell, shell.prompt);
 		if (!shell.isvoid)
 		{
-			if (ft_strcmp(shell.cmd[0], "exit"))
+			if (ft_strcmp(shell.cmd[0], "exit") || ft_strcmp(shell.cmd[0], "cd")
+				|| ft_strcmp(shell.cmd[0], "unset") || ft_strcmp(shell.cmd[0], "export"))
 				check_is_builtin(&shell);
 			if (!shell.isbuiltin)
 			{
@@ -122,10 +123,11 @@ int	main(int argc, char **argv, char **env_var)
 					free(shell.currently_running_cmd_path);
 				}
 				else
-					printf("minishell: command not found: %s\n", shell.cmd[0]);
+					ft_error(ft_strjoin("minishell: command not found: ",
+						shell.cmd[0]), 127, &shell);
 			}
+			shell.isbuiltin = 0;
 		}
-		i = 0;
 		free(shell.prompt);
 		free_array(shell.cmd);
 		//system("leaks minishell");

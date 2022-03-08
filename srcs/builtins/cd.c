@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:48:44 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 16:45:31 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/06 22:47:05 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ static void	cd_var_home(t_shell *shell)
 		tmp = ft_substr(shell->cmd[1], 2, ft_strlen(shell->cmd[1]));
 		tmp2 = ft_strjoin(shell->env_variables[i][1], "/");
 		if (chdir(ft_strjoin(tmp2, tmp)) == -1)
-			printf(RED"cd: %s: No such file or directory\n"RESET,
-				shell->cmd[1]);
+			ft_error(ft_strjoin("cd: ", strerror(errno)), errno, shell);
+		/* 	printf(RED"cd: %s: No such file or directory\n"RESET,
+				shell->cmd[1]); */
 		free(tmp);
 		free(tmp2);
 	}
