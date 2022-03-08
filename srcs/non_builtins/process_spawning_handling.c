@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 13:08:31 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:14:29 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 		new_cmd = handle_redirection(shell);
 		if (!new_cmd)
 			new_cmd = shell->cmd;
+		shell->currently_running_cmd_path = search_program_on_path(shell);
 		check_is_builtin(shell);
 		if (!shell->isbuiltin && !shell->redir_failed)
 			execve(shell->currently_running_cmd_path, new_cmd,
