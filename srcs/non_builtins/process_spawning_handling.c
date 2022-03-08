@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/06 23:22:04 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 16:37:09 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handle_command(t_shell *shell)
 				execve(shell->currently_running_cmd_path, shell->cmd,
 					restored_env_var);
 		}
-		/* printf("EXIT: %d\n", errno); */
+		//printf("EXIT: %d\n", errno);
 		exit (shell->errnum);
 	}
 	else

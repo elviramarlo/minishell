@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 18:07:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/06 22:59:33 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 16:36:41 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_pwd(t_shell *shell)
 	if (!shell->cmd[1])
 	{
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
-		ft_error(ft_strdup("minishell: error"), errno, shell);
+		ft_error(ft_strdup("minishell: error with pwd"), errno, shell);
 	else
 		printf("%s\n", cwd);
 	shell->isbuiltin = 1;

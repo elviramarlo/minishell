@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:48:44 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/06 22:47:05 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:27:55 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,24 @@ static void	cd_var_home(t_shell *shell)
 		tmp2 = ft_strjoin(shell->env_variables[i][1], "/");
 		if (chdir(ft_strjoin(tmp2, tmp)) == -1)
 			ft_error(ft_strjoin("cd: ", strerror(errno)), errno, shell);
-		/* 	printf(RED"cd: %s: No such file or directory\n"RESET,
-				shell->cmd[1]); */
 		free(tmp);
 		free(tmp2);
 	}
 }
 
-void	ft_cd(t_shell *shell)
+void	ft_cd(t_shell *shell, char **cmd)
 {
+	cmd = NULL;
 	if (shell->cmd[1])
 	{
 		if (!ft_strncmp(shell->cmd[1], "~/", 2))
 			cd_var_home(shell);
 		else if (chdir(shell->cmd[1]) == -1)
-			printf(RED"cd: %s: No such file or directory\n"RESET,
-				shell->cmd[1]);
+		{
+			ft_putstr_fd("minishell: cd: ", 2);
+			ft_error(ft_strjoin(shell->cmd[1], " No such file or directory"),
+				errno, shell);
+		}
 	}
 	shell->isbuiltin = 1;
 }

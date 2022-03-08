@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/06 22:23:19 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:25:50 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_aux_parse
 // Builtins
 void		check_is_builtin(t_shell *shell);
 void		ft_pwd(t_shell *shell);
-void		ft_cd(t_shell *shell);
+void		ft_cd(t_shell *shell, char **cmd);
 void		ft_echo(t_shell *shell);
 void		ft_exit(t_shell *shell);
 void		ft_env(t_shell *shell);
@@ -94,6 +94,7 @@ void		print_name(void);
 void		ft_error(char *msg, int errnum, t_shell *shell);
 int			ft_isdigit_str(char *str);
 int			ft_isalnum_str(char *str, char c);
+int			pos_cmd(t_shell *shell);
 
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);

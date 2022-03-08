@@ -6,11 +6,25 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/07 00:13:48 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:27:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	pos_cmd(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	if ((shell->cmd[0][0] == '>' && shell->cmd[1][0] == '>')
+		|| (shell->cmd[0][0] == '<' && shell->cmd[1][0] == '<'))
+		return (3);
+	else if (shell->cmd[0][0] == '>' || shell->cmd[0][0] == '<')
+		return (2);
+	else
+		return (0);
+}
 
 void	check_is_builtin(t_shell *shell)
 {
@@ -29,10 +43,10 @@ void	check_is_builtin(t_shell *shell)
 			ft_unset(shell);
 		else if (ft_strcmp(shell->cmd[0], "exit"))
 			ft_exit(shell);
-		else if (ft_strcmp(shell->cmd[0], "env") && shell->cmd[1] == 0)
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "env") && shell->cmd[1] == 0)
 			ft_env(shell);
 		else if (ft_strcmp(shell->cmd[0], "cd"))
-			ft_cd(shell);
+			ft_cd(shell, &shell->cmd[pos_cmd(shell)]);
 	}
 }
 
@@ -129,7 +143,7 @@ int	main(int argc, char **argv, char **env_var)
 			shell.isbuiltin = 0;
 		}
 		free(shell.prompt);
-		free_array(shell.cmd);
+		//free_array(shell.cmd);
 		//system("leaks minishell");
 	}
 }
