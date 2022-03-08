@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/07 15:54:38 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 13:08:31 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 				restored_env_var);
 		exit (1);
 	}
+	if (running_process_pid != shell->running_process_pid)
+		waitpid(running_process_pid, NULL, 0);
 	free_array(restored_env_var);
 }
