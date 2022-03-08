@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
+#    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/03/06 19:11:41 by elvmarti         ###   ########.fr        #
+#    Updated: 2022/03/05 20:28:40 by gaguado-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_UTILS)/errors.c \
 		$(SOURCE_NON_BUILT)/search_program_on_path.c \
 		$(SOURCE_NON_BUILT)/process_spawning_handling.c \
+		$(SOURCE_NON_BUILT)/pipes.c \
 		$(SOURCE_NON_BUILT)/redirections.c \
 		$(SOURCE_NON_BUILT)/redirections_aux.c
 
