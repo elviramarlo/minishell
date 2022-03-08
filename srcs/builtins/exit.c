@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 20:40:36 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 16:45:44 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 16:36:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ void	ft_exit(t_shell *shell)
 	}
 	if (!ft_isdigit_str(shell->cmd[1]))
 	{
-		printf(RED"exit: %s: numeric argument required\n"RESET, shell->cmd[1]);
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_error(ft_strjoin(shell->cmd[1], ": numeric argument required"),
+			255, shell);
 		exit (255);
 	}
 	else
-		printf(RED"exit: too many arguments\n"RESET);
+		ft_error(ft_strdup("minishell: exit: too many arguments"), 1, shell);
 	shell->isbuiltin = 1;
 }

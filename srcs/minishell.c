@@ -6,11 +6,25 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/07 15:56:28 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:27:06 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	pos_cmd(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	if ((shell->cmd[0][0] == '>' && shell->cmd[1][0] == '>')
+		|| (shell->cmd[0][0] == '<' && shell->cmd[1][0] == '<'))
+		return (3);
+	else if (shell->cmd[0][0] == '>' || shell->cmd[0][0] == '<')
+		return (2);
+	else
+		return (0);
+}
 
 void	check_is_builtin(t_shell *shell)
 {
@@ -18,7 +32,7 @@ void	check_is_builtin(t_shell *shell)
 	if (!shell->isvoid)
 	{
 		if (!even_quotes(shell))
-			printf(RED"Error: odd quotes\n"RESET);
+			ft_error(ft_strdup("minishell: error: odd quotes"), 1, shell);
 		else if (ft_strcmp(shell->cmd[0], "pwd"))
 			ft_pwd(shell);
 		else if (ft_strcmp(shell->cmd[0], "echo"))
@@ -29,10 +43,10 @@ void	check_is_builtin(t_shell *shell)
 			ft_unset(shell);
 		else if (ft_strcmp(shell->cmd[0], "exit"))
 			ft_exit(shell);
-		else if (ft_strcmp(shell->cmd[0], "env") && shell->cmd[1] == 0)
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "env") && shell->cmd[1] == 0)
 			ft_env(shell);
 		else if (ft_strcmp(shell->cmd[0], "cd"))
-			ft_cd(shell);
+			ft_cd(shell, &shell->cmd[pos_cmd(shell)]);
 	}
 }
 
@@ -93,7 +107,6 @@ void	add_to_history(char *to_add, t_shell *shell)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
-	int		i;
 
 	signal(SIGINT, sigint_handler);
 	(void)argc;
@@ -104,15 +117,16 @@ int	main(int argc, char **argv, char **env_var)
 	initialize_history(&shell);
 	while (1)
 	{
+		shell.errnum = 0;
 		shell.prompt = readline(CYAN"minishell> "RESET);
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
 		add_to_history(shell.prompt, &shell);
 		shell.cmd_backlog = parse_prompt(&shell, shell.prompt);
 		handle_pipes_and_command(&shell);
-		i = 0;
+
 		free(shell.prompt);
-		free_array(shell.cmd);
+		//free_array(shell.cmd);
 		//system("leaks minishell");
 	}
 }

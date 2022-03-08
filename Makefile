@@ -41,6 +41,7 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_UTILS)/string_utils.c \
 		$(SOURCE_UTILS)/print_name.c \
 		$(SOURCE_UTILS)/even_quotes.c \
+		$(SOURCE_UTILS)/errors.c \
 		$(SOURCE_NON_BUILT)/search_program_on_path.c \
 		$(SOURCE_NON_BUILT)/process_spawning_handling.c \
 		$(SOURCE_NON_BUILT)/pipes.c \

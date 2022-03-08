@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/02/28 19:52:44 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 16:57:21 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	make_str(char *prompt, t_aux_parse *parse, char **cmd)
 
 static void	quotes(char *prompt, t_aux_parse *parse, char **cmd, char q)
 {
-	if (!ft_strchr(" |<>", prompt[parse->i - 1]) && parse->i)
+	if (parse->i && !ft_strchr(" |<>", prompt[parse->i - 1]))
 		parse->check = 1;
 	while (prompt[parse->i] == q)
 		parse->i++;
@@ -83,9 +83,17 @@ char	**parse_prompt(t_shell *shell, char *prompt)
 	t_aux_parse	parse;
 
 	ft_bzero(&parse, sizeof(t_aux_parse));
-	cmd = malloc(sizeof(char *) * (num_str(shell->prompt, &parse) + 1));
 	parse.i = 0;
 	shell->isvoid = 0;
+	while (prompt[parse.i] == '\"' || prompt[parse.i] == '\'')
+		parse.i++;
+	if (prompt[parse.i] == '\0')
+	{
+		shell->isvoid = 1;
+		return (NULL);
+	}
+	cmd = malloc(sizeof(char *) * (num_str(shell->prompt, &parse) + 1));
+	parse.i =  0;
 	while (prompt[parse.i])
 	{
 		if (prompt[parse.i] == C_DQ)
