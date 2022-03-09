@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 14:25:19 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:57:05 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,44 +44,6 @@ static void	handle_child_pipes(int input_fd, int output_fd, int pipe)
 	close(output_fd);
 }
 
-static void	remove_heredoc_markers(t_shell *shell)
-{
-	int		i;
-	char	**temp;
-
-	i = 0;
-	while (shell->cmd[i])
-		i++;
-	temp = malloc(sizeof(char *) * 1 + 1);
-	temp[0] = ft_strdup(shell->cmd[0]);
-	free_array(shell->cmd);
-	shell->cmd = temp;
-}
-
-void	handle_heredoc(t_shell *shell)
-{
-	int		heredoc_fds[2];
-	char	*line;
-	char	*temp;
-
-	pipe(heredoc_fds);
-	remove_heredoc_markers(shell);
-	line = readline("> ");
-	while (line && !ft_strnstr(line, "EOF", ft_strlen("EOF")))
-	{
-		temp = replace_dollar_variable_in_string(line, shell);
-		free(line);
-		write(heredoc_fds[1], temp, ft_strlen(temp));
-		write(heredoc_fds[1], "\n", 1);
-		free(temp);
-		line = readline("> ");
-	}
-	free(line);
-	dup2(heredoc_fds[0], STDIN_FILENO);
-	close(heredoc_fds[0]);
-	close(heredoc_fds[1]);
-}
-
 void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 {
 	char	**restored_env_var;
@@ -95,7 +57,6 @@ void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 	if (running_process_pid == 0)
 	{
 		handle_child_pipes(input_fd, output_fd, pipe);
-		handle_heredoc(shell);
 		new_cmd = handle_redirection(shell);
 		if (!new_cmd)
 			new_cmd = shell->cmd;

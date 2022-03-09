@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:59:28 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/05 17:11:07 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:16:26 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,37 @@ char	**handle_redir_output(t_shell *shell)
 		return (create_array_only_cmd2(shell, '>')); */
 }
 
+static char	**handle_heredoc(t_shell *shell)
+{
+	int		heredoc_fds[2];
+	char	*line;
+	char	*temp;
+	char	*hd_keyword;
+	char	**new_cmd;
+
+	new_cmd = create_array_only_cmd(shell, '<', '>');
+	hd_keyword = shell->file_redirection;
+	pipe(heredoc_fds);
+	line = readline("> ");
+	while (line && !ft_strnstr(line, hd_keyword, ft_strlen(line)))
+	{
+		temp = replace_dollar_variable_in_string(line, shell);
+		free(line);
+		write(heredoc_fds[1], temp, ft_strlen(temp));
+		write(heredoc_fds[1], "\n", 1);
+		free(temp);
+		line = readline("> ");
+	}
+	free(line);
+	dup2(heredoc_fds[0], STDIN_FILENO);
+	close(heredoc_fds[0]);
+	close(heredoc_fds[1]);
+	return (new_cmd);
+}
+
 char	**handle_redir_input(t_shell *shell)
 {
-	int	fd;
+	int		fd;
 
 	fd = 0;
 	if (shell->redir)
@@ -50,6 +78,8 @@ char	**handle_redir_input(t_shell *shell)
 			return (create_array_only_cmd(shell, '<', '>'));
 		}
 	}
+	else
+		return (handle_heredoc(shell));
 	return (NULL);
 }
 
