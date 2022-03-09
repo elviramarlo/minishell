@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 22:10:44 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 22:59:27 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <termios.h>
 
 # define C_DQ 	'"'
 # define C_SQ	'\''
@@ -69,7 +70,7 @@ void		ft_unset(t_shell *shell);
 void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers
-void		sigint_handler(int sig);
+void	add_signal_handlers(void);
 
 // Redir
 char		**handle_redirection(t_shell *shell);
@@ -92,6 +93,7 @@ void		free_array(char **array);
 void		print_name(void);
 int			ft_isdigit_str(char *str);
 int			ft_isalnum_str(char *str, char c);
+void		setup_term(void);
 
 // Pipes
 void		handle_pipes_and_command(t_shell *shell);
@@ -100,6 +102,8 @@ void		handle_pipes_and_command(t_shell *shell);
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
 void		handle_command(t_shell *shell, int ifd, int ofd, int is_not_last);
+
+extern int g_is_interactive;
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"

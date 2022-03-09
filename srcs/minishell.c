@@ -6,11 +6,13 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 20:15:20 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 22:59:50 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int g_is_interactive = 0;
 
 void	check_is_builtin(t_shell *shell)
 {
@@ -95,16 +97,19 @@ int	main(int argc, char **argv, char **env_var)
 	t_shell	shell;
 	int		i;
 
-	signal(SIGINT, sigint_handler);
 	(void)argc;
 	(void)argv;
+	add_signal_handlers();
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
 	print_name();
+	setup_term();
 	initialize_history(&shell);
 	while (1)
 	{
+		g_is_interactive = 1;
 		shell.prompt = readline(CYAN"minishell> "RESET);
+		g_is_interactive = 0;
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
 		add_to_history(shell.prompt, &shell);
@@ -113,6 +118,5 @@ int	main(int argc, char **argv, char **env_var)
 		i = 0;
 		free(shell.prompt);
 		free_array(shell.cmd);
-		//system("leaks minishell");
 	}
 }
