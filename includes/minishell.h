@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 22:56:44 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 21:24:53 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ void		handle_pipes_and_command(t_shell *shell);
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
-void		handle_command(t_shell *shell, int input_fd, int output_fd,
-				int pipe);
+void		handle_command(t_shell *shell, int *pipe_fds, int *fdd, int pipe);
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
