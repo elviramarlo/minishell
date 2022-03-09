@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 22:30:09 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 22:13:33 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,18 @@ static int	count_pipes(char **cmd)
 	return (ret);
 }
 
-static void	process_command(t_shell *shell, int pc, int *pipe_fds, int i)
+static void	process_command(t_shell *shell, int is_not_last)
 {
+	int		pipe_fds[2];
+
+	pipe(pipe_fds);
 	shell->currently_running_cmd_path = search_program_on_path(shell);
 	if (shell->currently_running_cmd_path || shell->cmd[0][0] == '>')
 	{
-		if (pc == 1 || i == pc - 1)
-			handle_command(shell, pipe_fds[1], pipe_fds[0], -1);
-		else if (i == 0)
-			handle_command(shell, pipe_fds[1], pipe_fds[0], 1);
-		else
-			handle_command(shell, pipe_fds[1], pipe_fds[0], 0);
-		if (pc == 1 || i == pc - 1)
-			close(pipe_fds[1]);
+		handle_command(shell, pipe_fds[1], pipe_fds[0], is_not_last);
 		free(shell->currently_running_cmd_path);
+		close(pipe_fds[1]);
+		shell->fd_backup = pipe_fds[0];
 	}
 	else
 		printf("minishell: command not found: %s\n", shell->cmd[0]);
@@ -67,13 +65,11 @@ static void	process_command(t_shell *shell, int pc, int *pipe_fds, int i)
 void	handle_pipes_and_command(t_shell *shell)
 {
 	int		i;
-	int		pipe_fds[2];
 	int		pipe_count;
 
 	i = 0;
 	pipe_count = count_pipes(shell->cmd_backlog) + 1;
-	if (pipe_count != 1 && pipe_count != i + 1)
-		pipe(pipe_fds);
+	shell->fd_backup = STDIN_FILENO;
 	while (i < pipe_count)
 	{
 		handle_pipe(i, shell);
@@ -82,11 +78,8 @@ void	handle_pipes_and_command(t_shell *shell)
 			if (ft_strcmp(shell->cmd[0], "exit"))
 				check_is_builtin(shell);
 			if (!shell->isbuiltin)
-				process_command(shell, pipe_count, pipe_fds, i);
+				process_command(shell, (i + 1 != pipe_count));
 		}
 		i++;
 	}
-	waitpid(shell->running_process_pid, &shell->last_process_result, 0);
-	close(pipe_fds[1]);
-	close(pipe_fds[0]);
 }
