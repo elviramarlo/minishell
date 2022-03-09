@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 21:08:34 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 22:30:09 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,6 @@ static void	process_command(t_shell *shell, int pc, int *pipe_fds, int i)
 		printf("minishell: command not found: %s\n", shell->cmd[0]);
 }
 
-void	handle_heredoc(t_shell *t_shell)
-{
-	int		heredoc_fds[2];
-	char	*line;
-
-	(void) t_shell;
-	pipe(heredoc_fds);
-	printf("readline\n");
-	line = readline("> ");
-	while (line && !ft_strnstr(line, "EOF", ft_strlen(line)))
-	{
-		write(heredoc_fds[1], line, ft_strlen(line));
-		printf("readline\n");
-		line = readline("> ");
-	}
-	write(heredoc_fds[1], line, ft_strlen(line));
-	dup2(heredoc_fds[0], STDIN_FILENO);
-
-}
-
 void	handle_pipes_and_command(t_shell *shell)
 {
 	int		i;
@@ -96,7 +76,6 @@ void	handle_pipes_and_command(t_shell *shell)
 		pipe(pipe_fds);
 	while (i < pipe_count)
 	{
-		handle_heredoc(shell);
 		handle_pipe(i, shell);
 		if (!shell->isvoid)
 		{

@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/07 15:30:04 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 22:56:44 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char		**parse_prompt(t_shell *shell, char *prompt);
 int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 void		check_for_env_vars(char **cmd, t_shell *shell, t_aux_parse *parse);
+char		*replace_dollar_variable_in_string(char *str, t_shell *shell);
 
 // Utils
 char		**create_array_only_cmd(t_shell *shell, char c, char c2);
