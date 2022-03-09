@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 22:02:19 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 20:59:06 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:11:05 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_echo(t_shell *shell, char **cmd)
 
 	y = 1;
 	flag = check_flag(cmd, &y);
-	while (cmd[y])
+	while (cmd[y] && cmd[y][0] != '>' && cmd[y][0] != '<')
 	{
 		printf("%s", cmd[y]);
 		if (cmd[y + 1])

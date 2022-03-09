@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 20:59:56 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:28:08 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 void		sigint_handler(int sig);
 
 // Redir
-char		**handle_redirection(t_shell *shell);
-char		**handle_redir_aux(t_shell *shell, int *i, char **cmd);
-char		**handle_redir_output(t_shell *shell);
-char		**handle_redir_input(t_shell *shell);
+char		**handle_redirection(t_shell *shell, int fd);
+char		**handle_redir_aux(t_shell *shell, int *i, char **cmd, int fd);
+char		**handle_redir_output(t_shell *shell, int fd);
+char		**handle_redir_input(t_shell *shell, int fd);
 
 // Parse
 char		**parse_prompt(t_shell *shell, char *prompt);

@@ -6,34 +6,28 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:59:28 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 21:09:22 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:34:00 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**handle_redir_output(t_shell *shell)
+char	**handle_redir_output(t_shell *shell, int fd)
 {
-	int	fd;
-
-	fd = 0;
 	if (shell->redir)
 		fd = open(shell->file_redirection, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	else if (shell->redir_doble)
 		fd = open(shell->file_redirection, O_WRONLY | O_CREAT | O_APPEND, 0600);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
-	//if (shell->cmd[0][0] != '>')
+	if (shell->cmd[0][0] != '>')
 		return (create_array_only_cmd(shell, '>', '<'));
-/* 	else
-		return (create_array_only_cmd2(shell, '>')); */
+	else
+		return (&shell->cmd[pos_cmd(shell)]);
 }
 
-char	**handle_redir_input(t_shell *shell)
+char	**handle_redir_input(t_shell *shell, int fd)
 {
-	int	fd;
-
-	fd = 0;
 	if (shell->redir)
 	{
 		fd = open(shell->file_redirection, O_RDONLY);
@@ -53,7 +47,7 @@ char	**handle_redir_input(t_shell *shell)
 	return (NULL);
 }
 
-char	**handle_redirection(t_shell *shell)
+char	**handle_redirection(t_shell *shell, int fd)
 {
 	int		i;
 	char	**cmd;
@@ -66,7 +60,7 @@ char	**handle_redirection(t_shell *shell)
 	i = 0;
 	while (shell->cmd[i])
 	{
-		cmd = handle_redir_aux(shell, &i, cmd);
+		cmd = handle_redir_aux(shell, &i, cmd, fd);
 		i++;
 	}
 	if (shell->redir || shell->redir_doble)

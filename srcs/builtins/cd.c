@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:48:44 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 19:59:44 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:08:38 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	cd_var_home(t_shell *shell, char **cmd)
 
 void	ft_cd(t_shell *shell, char **cmd)
 {
-	cmd = NULL;
 	if (cmd[1])
 	{
 		if (!ft_strncmp(cmd[1], "~/", 2))
