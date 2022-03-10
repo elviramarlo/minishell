@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 18:10:10 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:53:32 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define C_EQ	'='
 # define C_PP	'|'
 # define ERR	"minishell: syntax error near unexpected token 'newline'"
+# define ERR2	": not a valid identifier"
 
 typedef struct s_shell
 {
@@ -73,12 +74,12 @@ void		ft_echo(t_shell *shell, char **cmd);
 void		ft_exit(t_shell *shell, char **cmd);
 void		ft_env(t_shell *shell);
 void		ft_export(t_shell *shell, char **cmd);
+int			cmd_len(char **cmd);
 void		ft_unset(t_shell *shell, char **cmd);
 void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
-
 // Signal handlers
-void	add_signal_handlers(void);
+void		add_signal_handlers(void);
 
 // Redir
 char		**handle_redirection(t_shell *shell, int fd);

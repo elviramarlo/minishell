@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:59:28 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/10 18:36:21 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:43:02 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**handle_redir_output(t_shell *shell, int parent_cmd)
 	if (!parent_cmd)
 		dup2(fd, STDOUT_FILENO);
 	close(fd);
+	free(shell->file_redirection);
 	if (shell->cmd[0][0] != '>')
 		return (create_array_only_cmd(shell, '>', '<'));
 	else
@@ -71,12 +72,14 @@ char	**handle_redir_input(t_shell *shell, int parent_cmd)
 			shell->redir_failed = 1;
 			ft_error(ft_strdup(strerror(errno)), errno, shell);
 			close(fd);
+			free(shell->file_redirection);
 		}
 		else
 		{
 			if (!parent_cmd)
 				dup2(fd, STDIN_FILENO);
 			close(fd);
+			free(shell->file_redirection);
 			return (create_array_only_cmd(shell, '<', '>'));
 		}
 	}

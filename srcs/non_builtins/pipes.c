@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 18:15:50 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:21:55 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,28 @@ static void	process_command(t_shell *shell, int is_not_last)
 void	handle_pipes_and_command(t_shell *shell)
 {
 	int		i;
-	int		pipe_count;
+	char	**new_cmd;
 
 	i = 0;
-	pipe_count = count_pipes(shell->cmd_backlog) + 1;
+	new_cmd = NULL;
 	shell->fd_backup = STDIN_FILENO;
-	while (i < pipe_count)
+	while (i < count_pipes(shell->cmd_backlog) + 1)
 	{
 		handle_pipe(i, shell);
 		if (!shell->isvoid)
 		{
 			if (parent_process_command(shell))
 			{
-				handle_redirection(shell, 1);
+				new_cmd = handle_redirection(shell, 1);
 				if (!shell->error_redir)
 					check_is_builtin(shell);
 				shell->error_redir = 0;
 			}
 			else
-				process_command(shell, (i + 1 != pipe_count));
+				process_command(shell, (i != count_pipes(shell->cmd_backlog)));
 		}
 		i++;
+		if (new_cmd)
+			free_array(new_cmd);
 	}
 }
