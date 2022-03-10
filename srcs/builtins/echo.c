@@ -6,24 +6,24 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 22:02:19 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/03 19:43:37 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:11:05 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	check_flag(t_shell *shell, int *y)
+static int	check_flag(char **cmd, int *y)
 {
 	int	x;
 	int	flag;
 
 	flag = 0;
-	while (shell->cmd[*y] != 0 && !ft_strncmp(shell->cmd[*y], "-n", 2))
+	while (cmd[*y] != 0 && !ft_strncmp(cmd[*y], "-n", 2))
 	{
 		x = 1;
-		while (shell->cmd[*y][x] == 'n')
+		while (cmd[*y][x] == 'n')
 			x++;
-		if (shell->cmd[*y][x] == '\0')
+		if (cmd[*y][x] == '\0')
 		{
 			flag = 1;
 			*y += 1;
@@ -34,17 +34,17 @@ static int	check_flag(t_shell *shell, int *y)
 	return (flag);
 }
 
-void	ft_echo(t_shell *shell)
+void	ft_echo(t_shell *shell, char **cmd)
 {
 	int	y;
 	int	flag;
 
 	y = 1;
-	flag = check_flag(shell, &y);
-	while (shell->cmd[y])
+	flag = check_flag(cmd, &y);
+	while (cmd[y] && cmd[y][0] != '>' && cmd[y][0] != '<')
 	{
-		printf("%s", shell->cmd[y]);
-		if (shell->cmd[y + 1])
+		printf("%s", cmd[y]);
+		if (cmd[y + 1])
 			printf(" ");
 		y++;
 	}

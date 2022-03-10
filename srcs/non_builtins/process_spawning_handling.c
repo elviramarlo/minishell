@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_spawning_handling.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 13:08:31 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:23:27 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 	if (running_process_pid == 0)
 	{
 		handle_child_pipes(input_fd, output_fd, pipe);
-		new_cmd = handle_redirection(shell);
+		new_cmd = handle_redirection(shell, 0);
 		if (!new_cmd)
 			new_cmd = shell->cmd;
 		check_is_builtin(shell);
 		if (!shell->isbuiltin && !shell->redir_failed)
 			execve(shell->currently_running_cmd_path, new_cmd,
 				restored_env_var);
-		exit (1);
+		exit (0);
 	}
 	if (running_process_pid != shell->running_process_pid)
 		waitpid(running_process_pid, NULL, 0);

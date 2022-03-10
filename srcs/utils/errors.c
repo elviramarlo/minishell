@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 18:07:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 20:59:30 by elvmarti         ###   ########.fr       */
+/*   Created: 2022/03/06 19:08:55 by elvmarti          #+#    #+#             */
+/*   Updated: 2022/03/09 16:21:43 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_pwd(t_shell *shell, char **cmd)
+void	ft_error(char *msg, int errnum, t_shell *shell)
 {
-	char	cwd[4096];
-	if (!cmd[1])
-	{
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-		ft_error(ft_strdup("minishell: error with pwd"), errno, shell);
-	else
-		printf("%s\n", cwd);
-	shell->isbuiltin = 1;
-	}
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	shell->errnum = errnum;
+	shell->last_process_result = errnum;
+	if (msg)
+		free(msg);
 }
