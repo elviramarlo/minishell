@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 22:27:03 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 20:51:57 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:36:07 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_unset(t_shell *shell, char **cmd)
 		{
 			ft_putstr_fd("unset: ", 2);
 			ft_error(ft_strjoin(cmd[i], ": not a valid identifier"), 1,
-			 	shell);
+				shell);
 		}
 		else if (find_env_variable(cmd[i], shell))
 			delete_env_variable(shell, find_env_variable(cmd[i],

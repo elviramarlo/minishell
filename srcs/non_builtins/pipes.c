@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 16:21:20 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:15:50 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,8 @@ static void	process_command(t_shell *shell, int is_not_last)
 		shell->fd_backup = pipe_fds[0];
 	}
 	else
-		printf("minishell: command not found: %s\n", shell->cmd[0]);
-}
-
-static int	parent_process_command(t_shell *shell)
-{
-	if ((ft_strcmp(shell->cmd[pos_cmd(shell)], "exit")
-		|| ft_strcmp(shell->cmd[pos_cmd(shell)], "cd")
-		|| ft_strcmp(shell->cmd[pos_cmd(shell)], "export")
-		|| ft_strcmp(shell->cmd[pos_cmd(shell)], "unset"))
-		&& shell->cmd[pos_cmd(shell)])
-			return (1);
-	else
-		return (0);
+		ft_error(ft_strjoin("minishell: command not found: ", shell->cmd[0]),
+			127, shell);
 }
 
 void	handle_pipes_and_command(t_shell *shell)
@@ -92,13 +81,13 @@ void	handle_pipes_and_command(t_shell *shell)
 			if (parent_process_command(shell))
 			{
 				handle_redirection(shell, 1);
-				check_is_builtin(shell);
+				if (!shell->error_redir)
+					check_is_builtin(shell);
+				shell->error_redir = 0;
 			}
 			else
 				process_command(shell, (i + 1 != pipe_count));
 		}
 		i++;
 	}
-	if(WIFEXITED(shell->last_process_result))
-		printf("%d %d\n", WEXITSTATUS(shell->last_process_result), shell->last_process_result);
 }

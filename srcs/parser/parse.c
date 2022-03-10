@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/09 16:34:35 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:34:30 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,28 @@ static void	no_quotes(char *prompt, t_aux_parse *parse, char **cmd)
 	}
 }
 
+static char	**aux(char *prompt, t_aux_parse *parse, t_shell *shell)
+{
+	char	**cmd;
+
+	cmd = malloc(sizeof(char *) * (num_str(shell->prompt, parse) + 1));
+	parse->i = 0;
+	while (prompt[parse->i])
+	{
+		if (prompt[parse->i] == C_DQ)
+			quotes(prompt, parse, cmd, C_DQ);
+		else if (prompt[parse->i] == C_SQ)
+			quotes(prompt, parse, cmd, C_SQ);
+		else if (prompt[parse->i] == C_SP)
+			parse->i++;
+		else
+			no_quotes(prompt, parse, cmd);
+		check_for_env_vars(cmd, shell, parse);
+	}
+	cmd[parse->x] = 0;
+	return (cmd);
+}
+
 char	**parse_prompt(t_shell *shell, char *prompt)
 {
 	char		**cmd;
@@ -92,21 +114,7 @@ char	**parse_prompt(t_shell *shell, char *prompt)
 		shell->isvoid = 1;
 		return (NULL);
 	}
-	cmd = malloc(sizeof(char *) * (num_str(shell->prompt, &parse) + 1));
-	parse.i =  0;
-	while (prompt[parse.i])
-	{
-		if (prompt[parse.i] == C_DQ)
-			quotes(prompt, &parse, cmd, C_DQ);
-		else if (prompt[parse.i] == C_SQ)
-			quotes(prompt, &parse, cmd, C_SQ);
-		else if (prompt[parse.i] == C_SP)
-			parse.i++;
-		else
-			no_quotes(prompt, &parse, cmd);
-		check_for_env_vars(cmd, shell, &parse);
-	}
-	cmd[parse.x] = 0;
+	cmd = aux(prompt, &parse, shell);
 	parse.i = 0;
 	parse.x = 0;
 	if (!cmd || cmd[0] == 0)

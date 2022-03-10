@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 22:59:27 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:10:10 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define C_SP	' '
 # define C_EQ	'='
 # define C_PP	'|'
+# define ERR	"minishell: syntax error near unexpected token 'newline'"
 
 typedef struct s_shell
 {
@@ -50,6 +51,7 @@ typedef struct s_shell
 	char	*file_redirection;
 	int		fd_backup;
 	int		errnum;
+	int		error_redir;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -64,6 +66,7 @@ typedef struct s_aux_parse
 
 // Builtins
 void		check_is_builtin(t_shell *shell);
+int			parent_process_command(t_shell *shell);
 void		ft_pwd(t_shell *shell, char **cmd);
 void		ft_cd(t_shell *shell, char **cmd);
 void		ft_echo(t_shell *shell, char **cmd);
@@ -72,6 +75,7 @@ void		ft_env(t_shell *shell);
 void		ft_export(t_shell *shell, char **cmd);
 void		ft_unset(t_shell *shell, char **cmd);
 void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
+
 
 // Signal handlers
 void	add_signal_handlers(void);

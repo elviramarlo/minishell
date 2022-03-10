@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 18:49:52 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 16:21:54 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:29:00 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	**create_array_only_cmd(t_shell *shell, char c, char c2)
 {
-	char **new_array_cmd;
-	int	len;
-	int	i;
+	char	**new_array_cmd;
+	int		len;
+	int		i;
 
 	len = 0;
 	while (shell->cmd[len])
