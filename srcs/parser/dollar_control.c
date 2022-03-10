@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 12:49:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 17:40:37 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:18:36 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,42 @@ static char	*replace_with_env(char **str, char *name, t_shell *shell)
 	return (ret);
 }
 
-char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
+static void	decimicer(char *str, char **ret, int from, int upto)
+{
+	char	*var_name;
+	char	*temp2;
+
+	temp2 = ft_substr(str, from, upto);
+	var_name = *ret;
+	*ret = ft_strjoin(var_name, temp2);
+	free(temp2);
+	free(var_name);
+}
+
+char	*replace_dollar_variable_in_string(char *s, t_shell *shell)
 {
 	char	*ret;
 	char	*var_name;
-	char	*temp2;
 	int		i;
 	int		z;
 
 	i = 0;
-	if (str[i] != '$')
-		while (str[i] != '\0' && str[i] != '$')
+	if (s[i] != '$')
+		while (s[i] != '\0' && s[i] != '$')
 			i++;
-	ret = ft_substr(str, 0, i);
-	while (ft_strchr(&str[i], '$'))
+	ret = ft_substr(s, 0, i);
+	while (ft_strchr(&s[i], '$'))
 	{
 		z = i + 1;
-		while (str[z] != '\0' && (ft_isalnum(str[z]) || str[z] == '_' || str[z] == '?'))
+		while (s[z] != '\0' && (ft_isalnum(s[z]) || s[z] == '_' || s[z] == '?'))
 			z++;
-		var_name = ft_substr(str, i + 1, z - i - 1);
+		var_name = ft_substr(s, i + 1, z - i - 1);
 		ret = replace_with_env(&ret, var_name, shell);
 		free(var_name);
 		i = z - 1;
-		while (str[z] != '\0' && str[z] != '$')
+		while (s[z] != '\0' && s[z] != '$')
 			z++;
-		temp2 = ft_substr(str, i + 1, z - i - 1);
-		var_name = ret;
-		ret = ft_strjoin(var_name, temp2);
-		free(temp2);
-		free(var_name);
+		decimicer(s, &ret, i + 1, z - i - 1);
 		i = z;
 	}
 	return (ret);
