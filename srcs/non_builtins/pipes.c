@@ -47,20 +47,18 @@ static int	count_pipes(char **cmd)
 	return (ret);
 }
 
-static void	process_command(t_shell *shell, int pc, int *pipe_fds, int i)
+static void	process_command(t_shell *shell, int is_not_last)
 {
+	int		pipe_fds[2];
+
+	pipe(pipe_fds);
 	shell->currently_running_cmd_path = search_program_on_path(shell);
 	if (shell->currently_running_cmd_path)
 	{
-		if (pc == 1 || i == pc - 1)
-			handle_command(shell, pipe_fds[1], pipe_fds[0], -1);
-		else if (i == 0)
-			handle_command(shell, pipe_fds[1], pipe_fds[0], 1);
-		else
-			handle_command(shell, pipe_fds[1], pipe_fds[0], 0);
-		if (pc == 1 || i == pc - 1)
-			close(pipe_fds[1]);
+		handle_command(shell, pipe_fds[1], pipe_fds[0], is_not_last);
 		free(shell->currently_running_cmd_path);
+		close(pipe_fds[1]);
+		shell->fd_backup = pipe_fds[0];
 	}
 	else
 		printf("minishell: command not found: %s\n", shell->cmd[0]);
@@ -81,15 +79,12 @@ static int	parent_process_command(t_shell *shell)
 void	handle_pipes_and_command(t_shell *shell)
 {
 	int		i;
-	int		pipe_fds[2];
 	int		pipe_count;
-/* 	int		fd = 0; */
 
 	i = 0;
 	pipe_count = count_pipes(shell->cmd_backlog) + 1;
-	if (pipe_count != 1 && pipe_count != i + 1)
-		pipe(pipe_fds);
-	 while (i < pipe_count)
+	shell->fd_backup = STDIN_FILENO;
+	while (i < pipe_count)
 	{
 		handle_pipe(i, shell);
 		if (!shell->isvoid)
@@ -100,16 +95,10 @@ void	handle_pipes_and_command(t_shell *shell)
 				check_is_builtin(shell);
 			}
 			else
-				process_command(shell, pipe_count, pipe_fds, i);
+				process_command(shell, (i + 1 != pipe_count));
 		}
 		i++;
 	}
-	waitpid(shell->running_process_pid, &shell->last_process_result, 0);
-	if(WIFEXITED(shell->last_process_result) ){
-		printf("%d %d\n",WEXITSTATUS(shell->last_process_result), shell->last_process_result);
-	} else {
-		printf("Has not exited");
-	}
-	close(pipe_fds[1]);
-	close(pipe_fds[0]);
+	if(WIFEXITED(shell->last_process_result))
+		printf("%d %d\n", WEXITSTATUS(shell->last_process_result), shell->last_process_result);
 }

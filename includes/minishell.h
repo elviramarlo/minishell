@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 17:28:08 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/09 22:59:27 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <termios.h>
 # include <sys/wait.h>
 # include <errno.h>
 # include <string.h>
@@ -47,6 +48,7 @@ typedef struct s_shell
 	int		redir;
 	int		redir_failed;
 	char	*file_redirection;
+	int		fd_backup;
 	int		errnum;
 }				t_shell;
 
@@ -72,7 +74,7 @@ void		ft_unset(t_shell *shell, char **cmd);
 void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers
-void		sigint_handler(int sig);
+void	add_signal_handlers(void);
 
 // Redir
 char		**handle_redirection(t_shell *shell, int fd);
@@ -85,6 +87,7 @@ char		**parse_prompt(t_shell *shell, char *prompt);
 int			even_quotes(t_shell *shell);
 int			num_str(char *prompt, t_aux_parse *parse);
 void		check_for_env_vars(char **cmd, t_shell *shell, t_aux_parse *parse);
+char		*replace_dollar_variable_in_string(char *str, t_shell *shell);
 
 // Utils
 char		**create_array_only_cmd(t_shell *shell, char c, char c2);
@@ -95,6 +98,7 @@ void		print_name(void);
 void		ft_error(char *msg, int errnum, t_shell *shell);
 int			ft_isdigit_str(char *str);
 int			ft_isalnum_str(char *str, char c);
+void		setup_term(void);
 int			pos_cmd(t_shell *shell);
 
 // Pipes
@@ -103,8 +107,9 @@ void		handle_pipes_and_command(t_shell *shell);
 // Launcher
 char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
-void		handle_command(t_shell *shell, int input_fd, int output_fd,
-				int pipe);
+void		handle_command(t_shell *shell, int ifd, int ofd, int is_not_last);
+
+extern int g_is_interactive;
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"

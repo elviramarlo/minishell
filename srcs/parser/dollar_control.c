@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 12:49:46 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/03/08 18:49:10 by elvmarti         ###   ########.fr       */
@@ -51,7 +51,7 @@ static char	*replace_with_env(char **str, char *name, t_shell *shell)
 	return (ret);
 }
 
-static char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
+char	*replace_dollar_variable_in_string(char *str, t_shell *shell)
 {
 	char	*ret;
 	char	*var_name;

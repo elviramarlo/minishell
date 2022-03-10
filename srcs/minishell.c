@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+int g_is_interactive = 0;
+
 void	check_is_builtin(t_shell *shell)
 {
 	shell->isbuiltin = 0;
@@ -95,27 +97,29 @@ int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
 
-	signal(SIGINT, sigint_handler);
 	(void)argc;
 	(void)argv;
+	add_signal_handlers();
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
 	print_name();
+	setup_term();
 	initialize_history(&shell);
 	while (1)
 	{
+		g_is_interactive = 1;
 		shell.errnum = 0;
 		shell.prompt = readline(CYAN"minishell> "RESET);
+		g_is_interactive = 0;
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
 		add_to_history(shell.prompt, &shell);
 		shell.cmd_backlog = parse_prompt(&shell, shell.prompt);
 		if (!shell.isvoid)
 		handle_pipes_and_command(&shell);
-
 		free(shell.prompt);
+		free_array(shell.cmd);
 		if (!shell.isvoid)
 			free_array(shell.cmd_backlog);
-		system("leaks minishell");
 	}
 }
