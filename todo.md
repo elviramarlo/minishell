@@ -1,5 +1,0 @@
-- [ ] Make cd change oldpath enviroment variable
-- [x] SEGFAULT on null command (env_vars)
-- [ ] Revise builtins
-- [ ] Heredoc
-- [-] Command not in the begging

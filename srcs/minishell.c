@@ -6,13 +6,13 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 18:27:59 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:49:59 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int g_is_interactive = 0;
+int	g_is_interactive = 0;
 
 void	add_enviroment_variables_to_shell(t_shell *shell, char **env_var)
 {

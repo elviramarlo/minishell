@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 18:53:32 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:49:39 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char		**find_env_variable(char *name, t_shell *shell);
 char		*search_program_on_path(t_shell *shell);
 void		handle_command(t_shell *shell, int ifd, int ofd, int is_not_last);
 
-extern int g_is_interactive;
+extern int	g_is_interactive;
 
 # define RESET				"\x1b[0m"
 # define WHITE				"\x1b[1m"
