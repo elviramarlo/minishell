@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 18:11:29 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:48:39 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,8 @@ int	main(int argc, char **argv, char **env_var)
 		add_to_history(shell.prompt, &shell);
 		shell.cmd_backlog = parse_prompt(&shell, shell.prompt);
 		if (!shell.isvoid)
-		handle_pipes_and_command(&shell);
+			handle_pipes_and_command(&shell);
 		free(shell.prompt);
-		free_array(shell.cmd);
 		if (!shell.isvoid)
 			free_array(shell.cmd_backlog);
 	}
