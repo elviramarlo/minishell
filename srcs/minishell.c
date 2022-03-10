@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 22:59:50 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 18:11:29 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,22 @@ void	check_is_builtin(t_shell *shell)
 	if (!shell->isvoid)
 	{
 		if (!even_quotes(shell))
-			printf(RED"Error: odd quotes\n"RESET);
-		else if (ft_strcmp(shell->cmd[0], "pwd"))
-			ft_pwd(shell);
-		else if (ft_strcmp(shell->cmd[0], "echo"))
-			ft_echo(shell);
-		else if (ft_strcmp(shell->cmd[0], "export"))
-			ft_export(shell);
-		else if (ft_strcmp(shell->cmd[0], "unset"))
-			ft_unset(shell);
-		else if (ft_strcmp(shell->cmd[0], "exit"))
-			ft_exit(shell);
-		else if (ft_strcmp(shell->cmd[0], "env") && shell->cmd[1] == 0)
+			ft_error(ft_strdup("minishell: error: odd quotes"), 1, shell);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "pwd"))
+			ft_pwd(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "echo"))
+			ft_echo(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "export"))
+			ft_export(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "unset"))
+			ft_unset(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "exit"))
+			ft_exit(shell, &shell->cmd[pos_cmd(shell)]);
+		else if (ft_strcmp(shell->cmd[pos_cmd(shell)], "env")
+			&& shell->cmd[pos_cmd(shell) + 1] == 0)
 			ft_env(shell);
 		else if (ft_strcmp(shell->cmd[0], "cd"))
-			ft_cd(shell);
+			ft_cd(shell, &shell->cmd[pos_cmd(shell)]);
 	}
 }
 
@@ -95,7 +96,6 @@ void	add_to_history(char *to_add, t_shell *shell)
 int	main(int argc, char **argv, char **env_var)
 {
 	t_shell	shell;
-	int		i;
 
 	(void)argc;
 	(void)argv;
@@ -108,15 +108,18 @@ int	main(int argc, char **argv, char **env_var)
 	while (1)
 	{
 		g_is_interactive = 1;
+		shell.errnum = 0;
 		shell.prompt = readline(CYAN"minishell> "RESET);
 		g_is_interactive = 0;
 		if (!shell.prompt)
 			exit(EXIT_SUCCESS);
 		add_to_history(shell.prompt, &shell);
 		shell.cmd_backlog = parse_prompt(&shell, shell.prompt);
+		if (!shell.isvoid)
 		handle_pipes_and_command(&shell);
-		i = 0;
 		free(shell.prompt);
 		free_array(shell.cmd);
+		if (!shell.isvoid)
+			free_array(shell.cmd_backlog);
 	}
 }

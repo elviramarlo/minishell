@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 22:27:03 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/01 16:43:17 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:51:57 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,22 @@ void	delete_env_variable(t_shell *shell, char **env_var_to_delete)
 	shell->env_variables = tmp;
 }
 
-void	ft_unset(t_shell *shell)
+void	ft_unset(t_shell *shell, char **cmd)
 {
 	int	i;
 
 	i = 0;
-	while (shell->cmd[i])
+	while (cmd[i])
 	{
-		if (ft_strchr(shell->cmd[i], C_EQ)
-			|| !ft_isalnum_str(shell->cmd[i], '='))
-			printf(RED"unset: '%s': not a valid identifier\n"RESET,
-				shell->cmd[i]);
-		else if (find_env_variable(shell->cmd[i], shell))
-			delete_env_variable(shell, find_env_variable(shell->cmd[i],
+		if (ft_strchr(cmd[i], C_EQ)
+			|| !ft_isalnum_str(cmd[i], '='))
+		{
+			ft_putstr_fd("unset: ", 2);
+			ft_error(ft_strjoin(cmd[i], ": not a valid identifier"), 1,
+			 	shell);
+		}
+		else if (find_env_variable(cmd[i], shell))
+			delete_env_variable(shell, find_env_variable(cmd[i],
 					shell));
 		i++;
 	}

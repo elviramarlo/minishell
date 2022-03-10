@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 22:13:33 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:21:20 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	handle_pipe(int index, t_shell *shell)
 	i = 0;
 	while (shell->cmd_backlog[i + z] && shell->cmd_backlog[i + z][0] != '|')
 		i++;
+	if (shell->cmd)
+		free(shell->cmd);
 	shell->cmd = malloc(sizeof(char *) * i + 1);
 	i = 0;
 	while (shell->cmd_backlog[z] && shell->cmd_backlog[z][0] != '|')
@@ -51,7 +53,7 @@ static void	process_command(t_shell *shell, int is_not_last)
 
 	pipe(pipe_fds);
 	shell->currently_running_cmd_path = search_program_on_path(shell);
-	if (shell->currently_running_cmd_path || shell->cmd[0][0] == '>')
+	if (shell->currently_running_cmd_path)
 	{
 		handle_command(shell, pipe_fds[1], pipe_fds[0], is_not_last);
 		free(shell->currently_running_cmd_path);
@@ -60,6 +62,18 @@ static void	process_command(t_shell *shell, int is_not_last)
 	}
 	else
 		printf("minishell: command not found: %s\n", shell->cmd[0]);
+}
+
+static int	parent_process_command(t_shell *shell)
+{
+	if ((ft_strcmp(shell->cmd[pos_cmd(shell)], "exit")
+		|| ft_strcmp(shell->cmd[pos_cmd(shell)], "cd")
+		|| ft_strcmp(shell->cmd[pos_cmd(shell)], "export")
+		|| ft_strcmp(shell->cmd[pos_cmd(shell)], "unset"))
+		&& shell->cmd[pos_cmd(shell)])
+			return (1);
+	else
+		return (0);
 }
 
 void	handle_pipes_and_command(t_shell *shell)
@@ -75,11 +89,16 @@ void	handle_pipes_and_command(t_shell *shell)
 		handle_pipe(i, shell);
 		if (!shell->isvoid)
 		{
-			if (ft_strcmp(shell->cmd[0], "exit"))
+			if (parent_process_command(shell))
+			{
+				handle_redirection(shell, 1);
 				check_is_builtin(shell);
-			if (!shell->isbuiltin)
+			}
+			else
 				process_command(shell, (i + 1 != pipe_count));
 		}
 		i++;
 	}
+	if(WIFEXITED(shell->last_process_result))
+		printf("%d %d\n", WEXITSTATUS(shell->last_process_result), shell->last_process_result);
 }

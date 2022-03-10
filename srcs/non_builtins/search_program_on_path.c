@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:30:32 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/02/26 18:31:59 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:41:32 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*handle_full_path_in_command(t_shell *shell)
 	home_path = find_env_variable("HOME", shell)[1];
 	stat_result = malloc(sizeof(struct stat));
 	if (ft_strnstr(shell->cmd[0], "~/", 2))
-		path = ft_strjoin(home_path, &shell->cmd[0][1]);
+		path = ft_strjoin(home_path, &shell->cmd[pos_cmd(shell)][1]);
 	else
 		path = ft_strdup(shell->cmd[0]);
 	stat(path, stat_result);
@@ -62,7 +62,7 @@ static char	*get_file_path_expanded(t_shell *shell, char **split_path)
 	while (split_path[i])
 	{
 		temp = ft_strjoin(split_path[i], "/");
-		full_exec_path = ft_strjoin(temp, shell->cmd[0]);
+		full_exec_path = ft_strjoin(temp, shell->cmd[pos_cmd(shell)]);
 		stat(full_exec_path, stat_result);
 		if (access(full_exec_path, X_OK) != -1
 			&& ((stat_result->st_mode) & S_IFMT) == S_IFREG)

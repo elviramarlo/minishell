@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 12:49:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/08 22:56:09 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:49:10 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*handle_dollar_question_mark(char **str, char *name, t_shell *shell)
 	char	*temp;
 
 	ret = *str;
-	temp = ft_itoa(shell->last_process_result);
+	temp = ft_itoa(WEXITSTATUS(shell->last_process_result));
 	ret = ft_strjoin(ret, temp);
 	free(temp);
 	temp = ret;

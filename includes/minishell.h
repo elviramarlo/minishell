@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
 /*   Updated: 2022/03/09 22:59:27 by gaguado-         ###   ########.fr       */
@@ -22,6 +22,9 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <termios.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <string.h>
 
 # define C_DQ 	'"'
 # define C_SQ	'\''
@@ -46,6 +49,7 @@ typedef struct s_shell
 	int		redir_failed;
 	char	*file_redirection;
 	int		fd_backup;
+	int		errnum;
 }				t_shell;
 
 typedef struct s_aux_parse
@@ -60,23 +64,23 @@ typedef struct s_aux_parse
 
 // Builtins
 void		check_is_builtin(t_shell *shell);
-void		ft_pwd(t_shell *shell);
-void		ft_cd(t_shell *shell);
-void		ft_echo(t_shell *shell);
-void		ft_exit(t_shell *shell);
+void		ft_pwd(t_shell *shell, char **cmd);
+void		ft_cd(t_shell *shell, char **cmd);
+void		ft_echo(t_shell *shell, char **cmd);
+void		ft_exit(t_shell *shell, char **cmd);
 void		ft_env(t_shell *shell);
-void		ft_export(t_shell *shell);
-void		ft_unset(t_shell *shell);
+void		ft_export(t_shell *shell, char **cmd);
+void		ft_unset(t_shell *shell, char **cmd);
 void		delete_env_variable(t_shell *shell, char **env_var_to_delete);
 
 // Signal handlers
 void	add_signal_handlers(void);
 
 // Redir
-char		**handle_redirection(t_shell *shell);
-char		**handle_redir_aux(t_shell *shell, int *i, char **cmd);
-char		**handle_redir_output(t_shell *shell);
-char		**handle_redir_input(t_shell *shell);
+char		**handle_redirection(t_shell *shell, int fd);
+char		**handle_redir_aux(t_shell *shell, int *i, char **cmd, int fd);
+char		**handle_redir_output(t_shell *shell, int fd);
+char		**handle_redir_input(t_shell *shell, int fd);
 
 // Parse
 char		**parse_prompt(t_shell *shell, char *prompt);
@@ -91,9 +95,11 @@ char		*join_array(char **array, int start, char restorable_divider);
 void		free_matrix(char ***array);
 void		free_array(char **array);
 void		print_name(void);
+void		ft_error(char *msg, int errnum, t_shell *shell);
 int			ft_isdigit_str(char *str);
 int			ft_isalnum_str(char *str, char c);
 void		setup_term(void);
+int			pos_cmd(t_shell *shell);
 
 // Pipes
 void		handle_pipes_and_command(t_shell *shell);
