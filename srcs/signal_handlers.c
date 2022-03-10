@@ -6,7 +6,7 @@
 /*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:58:35 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 23:42:34 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:29:54 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void	sigquit_handler(int sig)
 		return ;
 	}
 	signal(sig, sigquit_handler);
-	printf(CYAN"minishell> "RESET);
-	rl_replace_line("", 0);
 }
 
 void	add_signal_handlers(void)
