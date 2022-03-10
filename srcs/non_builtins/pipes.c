@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 19:02:20 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:21:20 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ void	handle_pipes_and_command(t_shell *shell)
 		if (!shell->isvoid)
 		{
 			if (parent_process_command(shell))
+			{
+				handle_redirection(shell, 1);
 				check_is_builtin(shell);
+			}
 			else
 				process_command(shell, pipe_count, pipe_fds, i);
 		}

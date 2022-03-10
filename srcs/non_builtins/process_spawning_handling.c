@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/09 17:25:11 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:23:27 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 	char	**restored_env_var;
 	char	**new_cmd;
 	int		running_process_pid;
-	int		fd = 0;
 
 	restored_env_var = restore_env_var_for_command(shell);
 	running_process_pid = fork();
@@ -58,7 +57,7 @@ void	handle_command(t_shell *shell, int input_fd, int output_fd, int pipe)
 	if (running_process_pid == 0)
 	{
 		handle_child_pipes(input_fd, output_fd, pipe);
-		new_cmd = handle_redirection(shell, fd);
+		new_cmd = handle_redirection(shell, 0);
 		if (!new_cmd)
 			new_cmd = shell->cmd;
 		check_is_builtin(shell);

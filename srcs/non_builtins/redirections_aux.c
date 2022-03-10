@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:31:29 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/09 17:27:35 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:21:59 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,29 @@ static void	get_file_name(t_shell *shell, int *i, int doble_redir)
 	}
 }
 
-char	**handle_redir_aux(t_shell *shell, int *i, char **cmd, int fd)
+char	**handle_redir_aux(t_shell *shell, int *i, char **cmd, int parent_cmd)
 {
 	if (ft_strchr(shell->cmd[*i], '>') && ft_strchr(shell->cmd[*i + 1], '>'))
 	{
 		get_file_name(shell, i, 1);
-		cmd = handle_redir_output(shell, fd);
+		cmd = handle_redir_output(shell, parent_cmd);
 		*i = *i + 1;
 	}
 	else if (ft_strchr(shell->cmd[*i], '>'))
 	{
 		get_file_name(shell, i, 0);
-		cmd = handle_redir_output(shell, fd);
+		cmd = handle_redir_output(shell, parent_cmd);
 	}
 	if (ft_strchr(shell->cmd[*i], '<') && ft_strchr(shell->cmd[*i + 1], '<'))
 	{
 		get_file_name(shell, i, 1);
-		cmd = handle_redir_input(shell, fd);
+		cmd = handle_redir_input(shell, parent_cmd);
 		*i = *i + 1;
 	}
 	else if (ft_strchr(shell->cmd[*i], '<'))
 	{
 		get_file_name(shell, i, 0);
-		cmd = handle_redir_input(shell, fd);
+		cmd = handle_redir_input(shell, parent_cmd);
 	}
 	return (cmd);
 }
