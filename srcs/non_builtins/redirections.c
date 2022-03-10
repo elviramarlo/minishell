@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:59:28 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/09 17:16:26 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:36:21 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 char	**handle_redir_output(t_shell *shell, int parent_cmd)
 {
 	int	fd;
-	
+
 	fd = 0;
 	if (shell->redir)
 		fd = open(shell->file_redirection, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	else if (shell->redir_doble)
 		fd = open(shell->file_redirection, O_WRONLY | O_CREAT | O_APPEND, 0600);
 	if (!parent_cmd)
-	dup2(fd, STDOUT_FILENO);
+		dup2(fd, STDOUT_FILENO);
 	close(fd);
 	if (shell->cmd[0][0] != '>')
 		return (create_array_only_cmd(shell, '>', '<'));
@@ -94,7 +94,6 @@ char	**handle_redirection(t_shell *shell, int parent_cmd)
 	shell->redir = 0;
 	shell->redir_doble = 0;
 	shell->redir_failed = 0;
-	errno = 0;
 	i = 0;
 	while (shell->cmd[i])
 	{

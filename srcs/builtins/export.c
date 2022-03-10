@@ -6,22 +6,25 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:51:47 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 21:04:04 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:22:01 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	***add_env_variables(char ***tmp, int i, char **cmd)
+static char	***add_env_variables(char ***tmp, int i, char **cmd, t_shell *shell)
 {
 	int		len;
 	char	**split_tmp;
 
 	len = 1;
-	while (cmd[len])
+	while (cmd[len] && cmd[len][0] != '>' &&  cmd[len][0] != '<')
 	{
 		if (!ft_isalnum_str(cmd[len], '='))
-			printf(RED"export: '%s': not a valid identifier\n"RESET, cmd[len]);
+		{
+			ft_putstr_fd("export: ", 2);
+			ft_error(ft_strjoin(cmd[len], ": not a valid identifier"), 1, shell);
+		}
 		else if (ft_strchr(cmd[len], C_EQ) && cmd[len][0] != C_EQ)
 		{
 			split_tmp = ft_split(cmd[len], C_EQ);
@@ -35,8 +38,10 @@ static char	***add_env_variables(char ***tmp, int i, char **cmd)
 			i++;
 		}
 		if (cmd[len][0] == C_EQ)
-			printf(RED"export: '%s': not a valid identifier\n"RESET,
-				cmd[len]);
+		{
+			ft_putstr_fd("export: ", 2);
+			ft_error(ft_strjoin(cmd[len], ": not a valid identifier"), 1, shell);
+		}
 		len++;
 	}
 	tmp[i] = NULL;
@@ -57,7 +62,7 @@ static void	create_array_env_variable(t_shell *shell, int env_len, int cmd_len, 
 		tmp[i][1] = ft_strdup(shell->env_variables[i][1]);
 		i++;
 	}
-	tmp = add_env_variables(tmp, i, cmd);
+	tmp = add_env_variables(tmp, i, cmd, shell);
 	free_matrix(shell->env_variables);
 	shell->env_variables = tmp;
 }

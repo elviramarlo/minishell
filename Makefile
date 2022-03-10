@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+         #
+#    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/02 17:19:52 by elvmarti          #+#    #+#              #
-#    Updated: 2022/03/09 22:46:30 by gaguado-         ###   ########.fr        #
+#    Updated: 2022/03/10 17:00:57 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = $(SOURCE_DIR)/minishell.c \
 		$(SOURCE_PARS)/malloc_parse.c \
 		$(SOURCE_PARS)/dollar_control.c \
 		$(SOURCE_DIR)/signal_handlers.c \
+		$(SOURCE_BUILT)/is_builtin.c \
 		$(SOURCE_BUILT)/pwd.c \
 		$(SOURCE_BUILT)/echo.c \
 		$(SOURCE_BUILT)/export.c \
