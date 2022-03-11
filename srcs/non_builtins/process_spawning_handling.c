@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_spawning_handling.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 17:32:53 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 19:14:49 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:56:08 by gaguado-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,5 @@ void	handle_command(t_shell *shell, int ifd, int ofd, int is_not_last)
 				restored_env_var);
 		exit (shell->last_process_result);
 	}
-	waitpid(shell->running_process_pid, &shell->last_process_result, 0);
-	shell->last_process_result = WEXITSTATUS(shell->last_process_result);
 	free_array(restored_env_var);
 }
