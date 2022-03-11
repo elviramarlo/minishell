@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:31:29 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/10 18:36:58 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/11 18:50:49 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,33 @@ static void	get_file_name(t_shell *shell, int *i, int doble_redir,
 	}
 }
 
+static int	is_redirection(t_shell *shell, int *i, char redir)
+{
+	if (shell->cmd[*i][0] == redir)
+		return (1);
+	return (0);
+}
+
 char	**handle_redir_aux(t_shell *shell, int *i, char **cmd, int parent_cmd)
 {
-	if (ft_strchr(shell->cmd[*i], '>') && ft_strchr(shell->cmd[*i + 1], '>'))
+	if (is_redirection(shell, i, '>') && is_redirection(shell, i + 1, '>'))
 	{
 		get_file_name(shell, i, 1, parent_cmd);
 		cmd = handle_redir_output(shell, parent_cmd);
 		*i = *i + 1;
 	}
-	else if (ft_strchr(shell->cmd[*i], '>'))
+	else if (is_redirection(shell, i, '>'))
 	{
 		get_file_name(shell, i, 0, parent_cmd);
 		cmd = handle_redir_output(shell, parent_cmd);
 	}
-	if (ft_strchr(shell->cmd[*i], '<') && ft_strchr(shell->cmd[*i + 1], '<'))
+	if (is_redirection(shell, i, '<') && is_redirection(shell, i + 1, '<'))
 	{
 		get_file_name(shell, i, 1, parent_cmd);
 		cmd = handle_redir_input(shell, parent_cmd);
 		*i = *i + 1;
 	}
-	else if (ft_strchr(shell->cmd[*i], '<'))
+	else if (is_redirection(shell, i, '<'))
 	{
 		get_file_name(shell, i, 0, parent_cmd);
 		cmd = handle_redir_input(shell, parent_cmd);

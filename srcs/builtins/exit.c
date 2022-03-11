@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 20:40:36 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/08 20:06:26 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:49:20 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit(t_shell *shell, char **cmd)
 
 	if (!cmd[1])
 		exit (0);
-	else if (ft_isdigit_str(cmd[1]) && cmd[2])
+	else if (ft_isdigit_str(cmd[1]) && !cmd[2])
 	{
 		num = ft_atoi(cmd[1]);
 		if (ft_atoi(cmd[1]) > 255)
