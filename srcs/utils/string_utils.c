@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:24:34 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/02 17:34:12 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:46:18 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,24 @@ int	ft_isdigit_str(char *str)
 			return (0);
 	}
 	return (1);
+}
+
+void	replace_home_path_on_cmd(t_shell *shell)
+{
+	int		i;
+	char	*home_path;
+	char	*path;
+
+	i = 1;
+	while (shell->cmd_backlog[i])
+	{
+		home_path = find_env_variable("HOME", shell)[1];
+		if (ft_strnstr(shell->cmd_backlog[i], "~/", 2))
+		{
+			path = ft_strjoin(home_path, &shell->cmd_backlog[i][1]);
+			free(shell->cmd_backlog[i]);
+			shell->cmd_backlog[i] = path;
+		}
+		i++;
+	}
 }

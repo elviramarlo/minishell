@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:53:46 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 19:49:59 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:30:58 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **env_var)
 	ft_bzero(&shell, sizeof(t_shell));
 	add_enviroment_variables_to_shell(&shell, env_var);
 	print_name();
-	setup_term();
+	setup_term(&shell);
 	initialize_history(&shell);
 	while (1)
 	{

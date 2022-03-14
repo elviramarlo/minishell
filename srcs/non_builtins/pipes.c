@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/11 17:11:48 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:47:13 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,40 @@ static void	process_command(t_shell *shell, int is_not_last)
 			127, shell);
 }
 
+static void	non_void_shell(t_shell *shell)
+{
+	char	**new_cmd;
+
+	new_cmd = handle_redirection(shell, 1);
+	if (!shell->error_redir)
+		check_is_builtin(shell);
+	shell->error_redir = 0;
+	if (new_cmd)
+		free_array(new_cmd);
+}
+
 void	handle_pipes_and_command(t_shell *shell)
 {
 	int		i;
-	char	**new_cmd;
 
 	i = 0;
-	new_cmd = NULL;
 	shell->fd_backup = STDIN_FILENO;
+	replace_home_path_on_cmd(shell);
 	while (i < count_pipes(shell->cmd_backlog) + 1)
 	{
 		handle_pipe(i, shell);
 		if (!shell->isvoid)
 		{
 			if (parent_process_command(shell))
-			{
-				new_cmd = handle_redirection(shell, 1);
-				if (!shell->error_redir)
-					check_is_builtin(shell);
-				shell->error_redir = 0;
-			}
+				non_void_shell(shell);
 			else
 				process_command(shell, (i != count_pipes(shell->cmd_backlog)));
 		}
 		i++;
-		if (new_cmd)
-			free_array(new_cmd);
+
 	}
+	while (wait(&shell->last_process_result) > 0)
+		continue ;
+	if (WIFEXITED(shell->last_process_result))
+		shell->last_process_result = WEXITSTATUS(shell->last_process_result);
 }

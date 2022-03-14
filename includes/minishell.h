@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 18:54:34 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 19:49:39 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:48:43 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ void		print_name(void);
 void		ft_error(char *msg, int errnum, t_shell *shell);
 int			ft_isdigit_str(char *str);
 int			ft_isalnum_str(char *str, char c);
-void		setup_term(void);
+void		setup_term(t_shell *shell);
 int			pos_cmd(t_shell *shell);
+void		replace_home_path_on_cmd(t_shell *shell);
 
 // Pipes
 void		handle_pipes_and_command(t_shell *shell);
