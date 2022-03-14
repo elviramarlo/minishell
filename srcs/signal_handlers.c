@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaguado- <gaguado-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:58:35 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/10 16:29:54 by gaguado-         ###   ########.fr       */
+/*   Updated: 2022/03/14 19:33:32 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	sigquit_handler(int sig)
 {
 	char	*nbr;
 
+	signal(sig, sigquit_handler);
 	if (!g_is_interactive)
 	{
 		nbr = ft_itoa(sig);
@@ -35,7 +36,8 @@ static void	sigquit_handler(int sig)
 		free(nbr);
 		return ;
 	}
-	signal(sig, sigquit_handler);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	add_signal_handlers(void)
