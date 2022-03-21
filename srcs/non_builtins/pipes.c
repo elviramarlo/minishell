@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 20:28:55 by gaguado-          #+#    #+#             */
-/*   Updated: 2022/03/14 17:47:13 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:08:45 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	handle_pipes_and_command(t_shell *shell)
 				process_command(shell, (i != count_pipes(shell->cmd_backlog)));
 		}
 		i++;
-
 	}
 	while (wait(&shell->last_process_result) > 0)
 		continue ;

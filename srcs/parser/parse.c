@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 17:05:20 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/10 18:34:30 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:10:15 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ char	**parse_prompt(t_shell *shell, char *prompt)
 	ft_bzero(&parse, sizeof(t_aux_parse));
 	parse.i = 0;
 	shell->isvoid = 0;
-	while (prompt[parse.i] == '\"' || prompt[parse.i] == '\'')
+	while (prompt[parse.i] == '\"' || prompt[parse.i] == '\''
+		|| prompt[parse.i] == ' ')
 		parse.i++;
 	if (prompt[parse.i] == '\0')
 	{
