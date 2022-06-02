@@ -6,7 +6,7 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:44 by elvmarti          #+#    #+#             */
-/*   Updated: 2022/03/10 18:38:05 by elvmarti         ###   ########.fr       */
+/*   Updated: 2022/05/19 00:10:17 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	check_is_builtin(t_shell *shell)
 
 int	parent_process_command(t_shell *shell)
 {
-	if ((ft_strcmp(shell->cmd[pos_cmd(shell)], "exit")
+	if (shell->cmd[pos_cmd(shell)] && (ft_strcmp(shell->cmd[pos_cmd(shell)], "exit")
 			|| ft_strcmp(shell->cmd[pos_cmd(shell)], "cd")
 			|| ft_strcmp(shell->cmd[pos_cmd(shell)], "export")
-			|| ft_strcmp(shell->cmd[pos_cmd(shell)], "unset"))
-		&& shell->cmd[pos_cmd(shell)])
+			|| ft_strcmp(shell->cmd[pos_cmd(shell)], "unset")))
 		return (1);
 	else
 		return (0);
